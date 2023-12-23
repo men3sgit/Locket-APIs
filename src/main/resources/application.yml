@@ -1,0 +1,26 @@
+server:
+  port: 8000
+
+spring:
+  datasource:
+    password: menespostgres
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/mobile_v2?serverTimezone=UTC
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+logging:
+  level:
+    org:
+      springframework:
+        security: debug
+
+# LOCKET
+locket:
+  app:
+    jwt:
+      secretKey: happynewyear2024
+      expirationTimeMs: 1800000 # 30 minutes
