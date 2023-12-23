@@ -32,7 +32,7 @@ public class User extends AbstractAudit implements UserDetails {
     private Role role;
 
     public User() {
-        locked = Boolean.TRUE;
+        locked = Boolean.FALSE;
         setStatus(Const.GeneralStatus.INACTIVE);
     }
 
@@ -54,7 +54,7 @@ public class User extends AbstractAudit implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !locked;
+        return locked;
     }
 
     @Override
