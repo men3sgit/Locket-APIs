@@ -11,6 +11,13 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 130892325003-8c4jop02371r7rc0812kg1n9crcsk643.apps.googleusercontent.com
+            client-secret: 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
 
 logging:
   level:
@@ -24,3 +31,6 @@ locket:
     jwt:
       secretKey: happynewyear2024
       expirationTimeMs: 1800000 # 30 minutes
+
+
+#Oauth2
