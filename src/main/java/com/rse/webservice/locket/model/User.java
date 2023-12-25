@@ -54,7 +54,7 @@ public class User extends AbstractAudit implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return locked;
+        return !locked;
     }
 
     @Override

@@ -6,4 +6,7 @@ public class Const {
         int ACTIVE = 1;
         int DELETED = 2;
     }
+    public interface MailTitle{
+        String NEW_USER_ACCOUNT_VERIFICATION = "New User Account Verification";
+    }
 }
