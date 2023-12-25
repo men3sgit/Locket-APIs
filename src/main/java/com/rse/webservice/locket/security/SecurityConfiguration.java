@@ -20,13 +20,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
     private final JwtAuthFilter jwtAuthenticationFilter;
     private final AuthenticationProvider authenticationProvider;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        (authorized) ->{
-                                authorized.anyRequest().authenticated();
+                        (authorized) -> {
+                            authorized.anyRequest().authenticated();
                         }
                 )
                 .sessionManagement(
@@ -46,7 +47,8 @@ public class SecurityConfiguration {
                 .requestMatchers(
                         "/api/v*/auth/register",
                         "/api/v*/auth/login",
-                        "/api/v*/users/**"
+                        "/api/v*/verify/**",
+                        "/"
                 );
     }
 }

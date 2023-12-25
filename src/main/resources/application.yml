@@ -2,22 +2,43 @@ server:
   port: 8000
 
 spring:
+  # Server mail
+  mail:
+    host: smtp.gmail.com # Replace ${EMAIL_HOST} with the email host (e.g., smtp.gmail.com)
+    port: 587 # Replace ${EMAIL_PORT} with the email port (e.g., 587)
+    username: dduymen@gmail.com # Replace ${EMAIL_ID} with the email username
+    password: vcuw qnga gors vitw # Replace ${EMAIL_PASSWORD} with the email password
+    default-encoding: UTF-8
+    properties:
+      mail:
+        mime:
+          charset: UTF
+        smtp:
+          timeout: 10000
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
   datasource:
     password: menespostgres
     username: postgres
     url: jdbc:postgresql://localhost:5432/mobile_v2?serverTimezone=UTC
+
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  #Oauth2
   security:
     oauth2:
       client:
         registration:
           google:
-            client-id: 130892325003-8c4jop02371r7rc0812kg1n9crcsk643.apps.googleusercontent.com
-            client-secret: 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
+            client-id: 1097604284267-ikgsv4k5p1lkbmivne2adnq1f3e6605m.apps.googleusercontent.com
+            client-secret: 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
 
 logging:
   level:
@@ -28,9 +49,16 @@ logging:
 # LOCKET
 locket:
   app:
+    name: Locket
     jwt:
       secretKey: happynewyear2024
       expirationTimeMs: 1800000 # 30 minutes
 
+    verification:
+      token:
+        expirationTimeMs: 900000 # 15 minutes
 
-#Oauth2
+
+
+
+

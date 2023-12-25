@@ -9,4 +9,5 @@ public interface AuthenticationService {
     RegistrationResponse addNewUser(RegistrationRequest request);
 
     AuthenticationResponse authenticate(AuthenticationRequest request);
+
 }
