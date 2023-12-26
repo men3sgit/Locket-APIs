@@ -1,6 +1,6 @@
 package com.rse.webservice.locket.controller;
 
-import com.rse.webservice.locket.payload.request.AuthenticationRequest;
+import com.rse.webservice.locket.payload.request.auth.AuthenticationRequest;
 import com.rse.webservice.locket.payload.request.RegistrationRequest;
 import com.rse.webservice.locket.payload.response.ApiResponse;
 import com.rse.webservice.locket.service.AuthenticationService;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
-    @PostMapping("/register")
+    @PostMapping(path = "/register")
     public ApiResponse<?> register(@RequestBody @Valid RegistrationRequest request) {
         return new ApiResponse<>(authenticationService.addNewUser(request));
     }
@@ -25,6 +25,16 @@ public class AuthenticationController {
     @PostMapping(path = "/login")
     public ApiResponse<?> login(@RequestBody AuthenticationRequest request) {
 
+        return new ApiResponse<>(authenticationService.authenticate(request));
+    }
+
+    @PostMapping(path = "/logout")
+    public ApiResponse<?> logout(@RequestBody AuthenticationRequest request) {
+        return new ApiResponse<>(authenticationService.authenticate(request));
+    }
+
+    @PostMapping(path = "/confirm-password")
+    public ApiResponse<?> confirmPassword(@RequestBody AuthenticationRequest request) {
         return new ApiResponse<>(authenticationService.authenticate(request));
     }
 

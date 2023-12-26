@@ -3,9 +3,10 @@ package com.rse.webservice.locket.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.sql.Timestamp;
+import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 
 @Table(name = "verification_tokens")
@@ -36,6 +37,27 @@ public class VerificationToken extends AbstractAudit {
         this.token = UUID.randomUUID().toString();
         this.userId = userId;
         this.expiredAt = new Timestamp(System.currentTimeMillis() + EXPIRATION);
+    }
+
+    public boolean isTokenValid() {
+        return !isTokenUsed() && !isTokenExpired();
+    }
+
+    public boolean isTokenUsed() {
+        return Objects.nonNull(verifiedAt);
+    }
+
+    public boolean isTokenExpired() {
+        return Objects.nonNull(expiredAt) && expiredAt.before(new Date());
+    }
+
+    public void setVerifiedAt(Timestamp verifiedAt) {
+        this.verifiedAt = verifiedAt;
+        setExpiredAt(verifiedAt);
+    }
+
+    public void verify() {
+        setVerifiedAt(new Timestamp(System.currentTimeMillis()));
     }
 
 

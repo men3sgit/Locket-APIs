@@ -13,23 +13,33 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
+
     @ExceptionHandler(ApiRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handlerApiRequestException(ApiRequestException e) {
-        Map<String, String> map = new HashMap<>();
-        map.put("code", "400");
-        map.put("status", HttpStatus.BAD_REQUEST.toString());
-        map.put("message", e.getMessage());
-        map.put("time", DateUtils.format(new Date()));
-        return map;
+    public Map<String, Object> handleApiRequestException(ApiRequestException e) {
+        return buildBadRequestErrorResponse(e.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    public Map<String, Object> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, Object> errorResponse = buildBadRequestErrorResponse(ex.getBody().getDetail());
+
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getFieldErrors().forEach(error ->
                 errors.put(error.getField(), error.getDefaultMessage()));
-        return errors;
+        errorResponse.put("errors", errors);
+
+        return errorResponse;
+    }
+
+    private Map<String, Object> buildBadRequestErrorResponse(String message) {
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("code", HttpStatus.BAD_REQUEST.value());
+        errorResponse.put("status", HttpStatus.BAD_REQUEST);
+        errorResponse.put("message", message);
+        errorResponse.put("time", DateUtils.format(new Date()));
+
+        return errorResponse;
     }
 }

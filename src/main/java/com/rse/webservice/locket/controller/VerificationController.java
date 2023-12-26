@@ -1,6 +1,6 @@
 package com.rse.webservice.locket.controller;
 
-import com.rse.webservice.locket.payload.request.NewUserVerificationRequest;
+import com.rse.webservice.locket.payload.request.verify.NewUserVerificationRequest;
 import com.rse.webservice.locket.payload.response.ApiResponse;
 import com.rse.webservice.locket.service.VerificationService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,8 @@ public class VerificationController {
     private final VerificationService verificationService;
 
     @GetMapping("/create-new-user")
-    public ApiResponse<?> verify(@RequestParam("token") NewUserVerificationRequest request) {
+    public ApiResponse<?> verify(NewUserVerificationRequest request) {
+        System.err.println(request.getToken());
         return new ApiResponse<>(verificationService.verifyNewUser(request));
     }
 }

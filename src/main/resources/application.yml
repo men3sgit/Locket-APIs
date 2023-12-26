@@ -51,12 +51,9 @@ locket:
   app:
     name: Locket
     jwt:
-      secretKey: happynewyear2024
+      secretKey: c3ckfrhaKW8Mplm9ylgQCsMLoFmsip/ouP1u51eWRLRtCgDA6OFoLH+azJtNEDUYODPqhm/Kms2jYJdaIczcrap9vBVrbd7qMk1AuoNJjZg=
       expirationTimeMs: 1800000 # 30 minutes
 
-    verification:
-      token:
-        expirationTimeMs: 900000 # 15 minutes
 
 
 

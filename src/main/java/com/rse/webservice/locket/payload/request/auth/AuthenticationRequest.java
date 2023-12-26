@@ -1,4 +1,4 @@
-package com.rse.webservice.locket.payload.request;
+package com.rse.webservice.locket.payload.request.auth;
 
 import lombok.Data;
 
