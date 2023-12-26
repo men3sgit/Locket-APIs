@@ -23,6 +23,8 @@ public class JwtUtils {
     public static final Logger LOGGER = LoggerFactory.getLogger(JwtUtils.class);
     @Value("${locket.app.jwt.secretKey}")
     private String SECRET_KEY;
+    @Value("${locket.app.jwt.expirationTimeMs}")
+    private int EXPIRATION;
 
     public String extractUsername(String token) {
         return extractClaims(token, Claims::getSubject);
@@ -70,11 +72,11 @@ public class JwtUtils {
     }
 
     private Date calculateExpirationDate() {
-        final int minutesOfExpiry = 30;
+
         // Get the current date and time
         Calendar calendar = Calendar.getInstance();
         // Add expirationHours to the current date and time
-        calendar.add(Calendar.MINUTE, minutesOfExpiry);
+        calendar.add(Calendar.MINUTE, EXPIRATION);
         // Get the updated date and time
         return calendar.getTime();
     }

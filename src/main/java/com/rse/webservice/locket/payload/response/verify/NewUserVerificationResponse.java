@@ -1,4 +1,4 @@
-package com.rse.webservice.locket.payload.response;
+package com.rse.webservice.locket.payload.response.verify;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

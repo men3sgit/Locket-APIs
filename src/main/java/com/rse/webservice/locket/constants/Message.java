@@ -3,6 +3,7 @@ package com.rse.webservice.locket.constants;
 
 public class Message {
     public static final String MSG_USER_NOT_FOUND = "User not found";
+    public static final String MSG_USER_LOCKED = "User locked";
     public static final String MSG_USER_ALREADY_EXISTS = "User already exists";
     public static final String MSG_INVALID_CREDENTIALS = "Invalid credentials";
     public static final String MSG_ACCESS_DENIED = "Access denied";
@@ -23,6 +24,8 @@ public class Message {
     // Authorization and authentication messages
     public static final String MSG_TOKEN_EXPIRED = "Token has expired";
     public static final String MSG_INVALID_TOKEN = "Invalid token";
+    public static final String MSG_NOT_FOUND_TOKEN = "Token not found";
+    public static final String MSG_USED_TOKEN = "Token has used";
     public static final String MSG_USER_NOT_AUTHORIZED = "User not authorized";
 
     // Database-related messages

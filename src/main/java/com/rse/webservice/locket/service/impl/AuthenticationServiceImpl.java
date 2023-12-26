@@ -4,10 +4,10 @@ import com.rse.webservice.locket.exception.ApiRequestException;
 import com.rse.webservice.locket.model.Role;
 import com.rse.webservice.locket.model.User;
 import com.rse.webservice.locket.model.VerificationToken;
-import com.rse.webservice.locket.payload.request.AuthenticationRequest;
+import com.rse.webservice.locket.payload.request.auth.AuthenticationRequest;
 import com.rse.webservice.locket.payload.request.RegistrationRequest;
-import com.rse.webservice.locket.payload.response.AuthenticationResponse;
-import com.rse.webservice.locket.payload.response.RegistrationResponse;
+import com.rse.webservice.locket.payload.response.auth.AuthenticationResponse;
+import com.rse.webservice.locket.payload.response.auth.RegistrationResponse;
 import com.rse.webservice.locket.repository.UserRepository;
 import com.rse.webservice.locket.repository.VerificationTokenRepository;
 import com.rse.webservice.locket.security.jwt.JwtUtils;
@@ -36,7 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public RegistrationResponse addNewUser(RegistrationRequest request) {
         // create new user
-        User newUser = new User();
+        var newUser = new User();
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new ApiRequestException("Email taken");
         }
@@ -46,7 +46,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         userRepository.save(newUser);
 
         // create new token
-        VerificationToken verificationToken = new VerificationToken(newUser.getId());
+        var verificationToken = new VerificationToken(newUser.getId());
         verificationTokenRepository.save(verificationToken);
 
         // send mail to verify
@@ -57,7 +57,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
+        var authentication = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
         try {
             authenticationManager.authenticate(authentication).isAuthenticated();
         } catch (Exception e) {
