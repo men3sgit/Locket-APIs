@@ -4,6 +4,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+/**
+ * @author Menes
+ * @version 0.0.1
+ * @since 12/26/2023
+ */
 public class DateUtils {
 
     public static final String DATE_FORMAT = "yyyy-MM-dd";
@@ -34,10 +39,35 @@ public class DateUtils {
 
     public static final String DATE_PATTERN_MM = "MM";
 
+    //==================================DEFAULT=========================================
+    private static final String DATE_DEFAULT = DATE_FORMAT_2;
+    private static final String DATE_TIME_DEFAULT = DATE_TIME_FORMAT_2;
+    private static final String TIME_ZONE_DEFAULT = UTC;
+
+
     public static String format(Date date) {
-        String pattern = DATE_TIME_FORMAT_10 + " 'UTC'";
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        sdf.setTimeZone(TimeZone.getTimeZone(UTC));
+        return format(date, DATE_TIME_DEFAULT);
+    }
+
+    public static String format(Date date, String pattern) {
+        return format(date, pattern, TIME_ZONE_DEFAULT);
+    }
+
+    public static String format(Date date, String pattern, String timeZone) {
+        var sdf = new SimpleDateFormat(pattern);
+        sdf.setTimeZone(TimeZone.getTimeZone(timeZone));
         return sdf.format(date);
     }
+
+    public static String now(String pattern) {
+        return format(new Date(), pattern);
+    }
+
+    public static String now() {
+        return now(DATE_TIME_DEFAULT);
+    }
+
+
+
+    private DateUtils(){}
 }

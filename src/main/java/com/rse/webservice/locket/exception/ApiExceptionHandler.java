@@ -38,7 +38,7 @@ public class ApiExceptionHandler {
         errorResponse.put("code", HttpStatus.BAD_REQUEST.value());
         errorResponse.put("status", HttpStatus.BAD_REQUEST);
         errorResponse.put("message", message);
-        errorResponse.put("time", DateUtils.format(new Date()));
+        errorResponse.put("time", DateUtils.now());
 
         return errorResponse;
     }

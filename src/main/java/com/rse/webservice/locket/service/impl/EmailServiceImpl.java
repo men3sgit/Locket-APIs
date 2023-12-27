@@ -1,5 +1,6 @@
 package com.rse.webservice.locket.service.impl;
 
+import com.rse.webservice.locket.utils.EmailUtils;
 import com.rse.webservice.locket.utils.templates.TemplateConfig;
 import com.rse.webservice.locket.service.EmailService;
 import jakarta.mail.MessagingException;
@@ -31,7 +32,13 @@ public class EmailServiceImpl implements EmailService {
     @Override
     @Async
     public void sendHtmlMailMessage(String to, String subject, TemplateConfig config) {
+        sendHtmlMailMessage(to, null, subject, config);
+    }
+
+    @Override
+    public void sendHtmlMailMessage(String to, String name, String subject, TemplateConfig config) {
         try {
+
             Context context = new Context();
             context.setVariables(config.getProperties());
             String text = templateEngine.process(config.getPath(), context);
