@@ -1,5 +1,6 @@
 package com.rse.webservice.locket.security.jwt;
 
+import com.rse.webservice.locket.constants.Key;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain) throws ServletException, IOException {
 
-        if (request.getHeader("Authorization") == null) {
+        if (request.getHeader(Key.KEY_AUTHORIZATION) == null) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -59,10 +60,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     }
 
     private String parseJwt(HttpServletRequest request) {
-        String headerAuth = request.getHeader("Authorization");
+        String headerAuth = request.getHeader(Key.KEY_AUTHORIZATION);
 
-        if (headerAuth.startsWith("Bearer ")) {
-            return headerAuth.substring(7);
+        if (headerAuth.startsWith(Key.KEY_BEARER)) {
+            return headerAuth.split("\\s++")[1];
         }
 
         return null;

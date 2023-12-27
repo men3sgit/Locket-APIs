@@ -7,5 +7,5 @@ public interface VerificationService {
 
     NewUserVerificationResponse verifyNewUser(NewUserVerificationRequest request);
 
-    void sendMailToVerify(String to, String token);
+    void sendMailToVerify(String to, String name, String token);
 }

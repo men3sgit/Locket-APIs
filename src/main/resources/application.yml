@@ -4,10 +4,10 @@ server:
 spring:
   # Server mail
   mail:
-    host: smtp.gmail.com # Replace ${EMAIL_HOST} with the email host (e.g., smtp.gmail.com)
-    port: 587 # Replace ${EMAIL_PORT} with the email port (e.g., 587)
-    username: dduymen@gmail.com # Replace ${EMAIL_ID} with the email username
-    password: vcuw qnga gors vitw # Replace ${EMAIL_PASSWORD} with the email password
+    host: smtp.gmail.com
+    port: 587
+    username: dduymen@gmail.com
+    password: vcuw qnga gors vitw
     default-encoding: UTF-8
     properties:
       mail:
@@ -39,6 +39,10 @@ spring:
           google:
             client-id: 1097604284267-ikgsv4k5p1lkbmivne2adnq1f3e6605m.apps.googleusercontent.com
             client-secret: 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
+            scope:
+              - openid
+              - profile
+              - email
 
 logging:
   level:

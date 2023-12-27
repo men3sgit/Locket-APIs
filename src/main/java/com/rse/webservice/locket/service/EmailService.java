@@ -6,4 +6,6 @@ public interface EmailService {
     void sendSimpleMessage(String to, String subject, String text);
 
     void sendHtmlMailMessage(String to, String subject, TemplateConfig config);
+
+    void sendHtmlMailMessage(String to, String name, String subject, TemplateConfig config);
 }

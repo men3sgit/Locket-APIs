@@ -1,5 +1,6 @@
 package com.rse.webservice.locket.model;
 
+import com.rse.webservice.locket.utils.Generator;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,7 +35,7 @@ public class VerificationToken extends AbstractAudit {
     private Timestamp verifiedAt;
 
     public VerificationToken(Long userId) {
-        this.token = UUID.randomUUID().toString();
+        this.token = Generator.generateRandomBase64WithoutNumberToken();
         this.userId = userId;
         this.expiredAt = new Timestamp(System.currentTimeMillis() + EXPIRATION);
     }

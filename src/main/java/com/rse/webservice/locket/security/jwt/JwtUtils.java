@@ -58,6 +58,7 @@ public class JwtUtils {
 
     public String generateToken(Map<String, Object> extractClaims,
                                 UserDetails userDetails) {
+        System.err.println(EXPIRATION);
         return Jwts.builder()
                 .setClaims(extractClaims)
                 .setSubject(userDetails.getUsername())
