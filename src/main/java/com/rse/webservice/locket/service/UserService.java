@@ -11,4 +11,5 @@ public interface UserService {
 
     // TODO: Paging list
     List<UserRetrievalResponse> retrieveAllUsers();
+
 }

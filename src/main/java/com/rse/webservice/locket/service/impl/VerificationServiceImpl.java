@@ -52,7 +52,6 @@ public class VerificationServiceImpl implements VerificationService {
         var verifyNewUserTemplate = "verification_new_user_email_template.html";
         var config = new TemplateConfig();
         config.setPath(verifyNewUserTemplate);
-        // TODO: change to -> name
         config.setProperties(Map.of("title", title, "name", name, "url", url));
         emailService.sendHtmlMailMessage(to, Const.MailTitle.NEW_USER_ACCOUNT_VERIFICATION, config);
     }
@@ -65,6 +64,7 @@ public class VerificationServiceImpl implements VerificationService {
         }
 
         if (verificationToken.isTokenExpired()) {
+            // TODO: resend mail
             throw new ApiRequestException(Message.MSG_TOKEN_EXPIRED);
         }
 
