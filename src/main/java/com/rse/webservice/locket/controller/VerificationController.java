@@ -1,6 +1,7 @@
 package com.rse.webservice.locket.controller;
 
 import com.rse.webservice.locket.payload.request.verify.NewUserVerificationRequest;
+import com.rse.webservice.locket.payload.request.verify.ResendTokenRequest;
 import com.rse.webservice.locket.payload.response.ApiResponse;
 import com.rse.webservice.locket.service.VerificationService;
 import com.rse.webservice.locket.utils.URL;
@@ -15,9 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class VerificationController {
     private final VerificationService verificationService;
 
-    @GetMapping(path = URL.REGISTRATION)
+    @GetMapping(path = URL.REGISTRATION_CONFIRM)
     public ApiResponse<?> verify(NewUserVerificationRequest request) {
         System.err.println(request.getToken());
         return new ApiResponse<>(verificationService.verifyNewUser(request));
+    }
+    @GetMapping(path = URL.RESEND_TOKEN)
+    public ApiResponse<?> resendToken(ResendTokenRequest request){
+        return null;
     }
 }

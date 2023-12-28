@@ -1,15 +1,15 @@
 package com.rse.webservice.locket.controller;
 
+import com.rse.webservice.locket.payload.request.user.UserRetrievalRequest;
 import com.rse.webservice.locket.payload.response.ApiResponse;
 import com.rse.webservice.locket.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.OAuth2AuthenticatedPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,9 +22,15 @@ public class UserController {
         return new ApiResponse<>(userService.retrieveAllUsers());
     }
 
+    @GetMapping("/{id}")
+    public ApiResponse<?> getUserById(@PathVariable(value = "id") Long id) {
+        return new ApiResponse<>(userService.retrieveUserById(UserRetrievalRequest.of(id)));
+    }
+
     @GetMapping("/principal")
     public Object principal(@AuthenticationPrincipal OAuth2AuthenticatedPrincipal principal) {
         return principal;
     }
+
 
 }
