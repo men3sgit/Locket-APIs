@@ -1,6 +1,6 @@
 package com.rse.webservice.locket.controller;
 
-import com.rse.webservice.locket.payload.request.user.UserRetrievalRequest;
+import com.rse.webservice.locket.payload.request.user.UserCreateRequest;
 import com.rse.webservice.locket.payload.response.ApiResponse;
 import com.rse.webservice.locket.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ApiResponse<?> getUserById(@PathVariable(value = "id") Long id) {
-        return new ApiResponse<>(userService.retrieveUserById(UserRetrievalRequest.of(id)));
+        return new ApiResponse<>(userService.retrieveUserById(UserCreateRequest.of(id)));
     }
 
     @GetMapping("/principal")

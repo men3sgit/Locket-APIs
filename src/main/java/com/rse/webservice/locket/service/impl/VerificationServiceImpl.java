@@ -1,6 +1,6 @@
 package com.rse.webservice.locket.service.impl;
 
-import com.rse.webservice.locket.constants.Message;
+import com.rse.webservice.locket.constants.ConstantKey;
 import com.rse.webservice.locket.exception.ApiRequestException;
 import com.rse.webservice.locket.model.User;
 import com.rse.webservice.locket.model.VerificationToken;
@@ -11,7 +11,6 @@ import com.rse.webservice.locket.repository.VerificationTokenRepository;
 import com.rse.webservice.locket.service.EmailService;
 import com.rse.webservice.locket.service.VerificationService;
 import com.rse.webservice.locket.utils.Const;
-import com.rse.webservice.locket.utils.EmailUtils;
 import com.rse.webservice.locket.utils.URL;
 import com.rse.webservice.locket.utils.templates.TemplateConfig;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +42,7 @@ public class VerificationServiceImpl implements VerificationService {
         token.verify();
         verificationTokenRepository.save(token);
 
-        return NewUserVerificationResponse.of(Message.MSG_SUCCESS);
+        return NewUserVerificationResponse.of(ConstantKey.MSG_SUCCESS);
     }
 
     @Override
@@ -60,26 +59,26 @@ public class VerificationServiceImpl implements VerificationService {
         var verificationToken = getVerificationToken(token);
 
         if (verificationToken.isTokenUsed()) {
-            throw new ApiRequestException(Message.MSG_USED_TOKEN);
+            throw new ApiRequestException(ConstantKey.MSG_USED_TOKEN);
         }
 
         if (verificationToken.isTokenExpired()) {
             // TODO: resend mail
-            throw new ApiRequestException(Message.MSG_TOKEN_EXPIRED);
+            throw new ApiRequestException(ConstantKey.MSG_TOKEN_EXPIRED);
         }
 
         if (!verificationToken.isTokenValid()) {
-            throw new ApiRequestException(Message.MSG_INVALID_TOKEN);
+            throw new ApiRequestException(ConstantKey.MSG_INVALID_TOKEN);
         }
     }
 
     private User getUserById(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new ApiRequestException(Message.MSG_USER_NOT_FOUND));
+                .orElseThrow(() -> new ApiRequestException(ConstantKey.MSG_USER_NOT_FOUND));
     }
 
     private VerificationToken getVerificationToken(String token) {
         return verificationTokenRepository.findByToken(token)
-                .orElseThrow(() -> new ApiRequestException(Message.MSG_NOT_FOUND_TOKEN));
+                .orElseThrow(() -> new ApiRequestException(ConstantKey.MSG_NOT_FOUND_TOKEN));
     }
 }

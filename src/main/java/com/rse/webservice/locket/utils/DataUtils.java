@@ -20,5 +20,6 @@ public class DataUtils {
     public static <T> T copyProperties(Object source, Class<T> classTarget) {
         return copyProperties(source, classTarget, (String[]) null);
     }
+
 }
 

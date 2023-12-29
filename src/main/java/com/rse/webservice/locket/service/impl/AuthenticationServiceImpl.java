@@ -1,6 +1,6 @@
 package com.rse.webservice.locket.service.impl;
 
-import com.rse.webservice.locket.constants.Message;
+import com.rse.webservice.locket.constants.ConstantKey;
 import com.rse.webservice.locket.exception.ApiRequestException;
 import com.rse.webservice.locket.model.Role;
 import com.rse.webservice.locket.model.User;
@@ -16,7 +16,6 @@ import com.rse.webservice.locket.service.AuthenticationService;
 import com.rse.webservice.locket.service.VerificationService;
 import com.rse.webservice.locket.utils.DataUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -40,7 +39,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public RegistrationResponse addNewUser(RegistrationRequest request) {
         // create new user
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new ApiRequestException(Message.MSG_EMAIL_TAKEN);
+            throw new ApiRequestException(ConstantKey.MSG_EMAIL_TAKEN);
         }
         var newUser = DataUtils.copyProperties(request, User.class);
         newUser.setRole(Role.USER);

@@ -1,7 +1,7 @@
 package com.rse.webservice.locket.constants;
 
 
-public class Message {
+public class ConstantKey {
     public static final String MSG_USER_NOT_FOUND = "User not found";
     public static final String MSG_USER_LOCKED = "User locked";
     public static final String MSG_EMAIL_TAKEN = "Email taken";
@@ -39,5 +39,8 @@ public class Message {
 
     // Basic messages
     public static final String MSG_SUCCESS = "Success";
+
+    // ERRORS
+    public static final String ERROR_NOT_EXISTS = "Error not exists";
 
 }

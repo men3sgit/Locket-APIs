@@ -1,6 +1,6 @@
 package com.rse.webservice.locket.config;
 
-import com.rse.webservice.locket.constants.Message;
+import com.rse.webservice.locket.constants.ConstantKey;
 import com.rse.webservice.locket.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +23,7 @@ public class ApplicationConfig {
     public UserDetailsService userDetailsService() {
         return (username) -> userRepository
                 .findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException(Message.MSG_USER_NOT_FOUND));
+                .orElseThrow(() -> new UsernameNotFoundException(ConstantKey.MSG_USER_NOT_FOUND));
     }
 
     @Bean
