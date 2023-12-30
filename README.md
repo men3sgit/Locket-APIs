@@ -26,7 +26,7 @@ Welcome to the documentation for the Locket Application RESTful APIs! This docum
 ## Getting Started
 To run the Locket Application APIs locally, follow these steps:
 1. Clone the repository.
-2. Configure the database connection in the `application.properties` file.
+2. Configure the database connection in the 'application.yml' file located in the src/main/resources directory.
 3. Set up OAuth2 and obtain client credentials.
 4. Configure RabbitMQ settings.
 5. Set up S3 credentials for storage.
