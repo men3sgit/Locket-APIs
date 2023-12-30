@@ -4,6 +4,7 @@ import com.rse.webservice.locket.constants.ConstantKey;
 import com.rse.webservice.locket.exception.ApiRequestException;
 import com.rse.webservice.locket.model.Post;
 import com.rse.webservice.locket.payload.request.post.PostCreateRequest;
+import com.rse.webservice.locket.payload.request.post.PostDeleteRequest;
 import com.rse.webservice.locket.payload.request.post.PostSelfRequest;
 import com.rse.webservice.locket.payload.response.post.PostCreateResponse;
 import com.rse.webservice.locket.payload.response.post.PostSelfResponse;
@@ -32,9 +33,15 @@ public class PostServiceImpl implements PostService {
         return DataUtils.copyProperties(getPost(request.getId()), PostSelfResponse.class);
     }
 
+    @Override
+    public PostSelfResponse delete(PostDeleteRequest request) {
+        return null;
+    }
+
     private Post getPost(Long id) {
         return postRepository
                 .findById(id)
-                .orElseThrow(() -> new ApiRequestException(ConstantKey.ERROR_NOT_EXISTS, List.of("Post")));
+                .orElseThrow(() -> new ApiRequestException("post with id %s not found".formatted(id)));
     }
+
 }

@@ -2,8 +2,8 @@ package com.rse.webservice.locket.service.impl;
 
 import com.rse.webservice.locket.exception.ApiRequestException;
 import com.rse.webservice.locket.model.User;
-import com.rse.webservice.locket.payload.request.user.UserCreateRequest;
-import com.rse.webservice.locket.payload.response.user.UserRetrievalResponse;
+import com.rse.webservice.locket.payload.request.user.UserSelfRequest;
+import com.rse.webservice.locket.payload.response.user.UserSelfResponse;
 import com.rse.webservice.locket.repository.UserRepository;
 import com.rse.webservice.locket.service.UserService;
 import com.rse.webservice.locket.utils.DataUtils;
@@ -20,17 +20,17 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserRetrievalResponse retrieveUserById(UserCreateRequest request) {
+    public UserSelfResponse self(UserSelfRequest request) {
         var user = getUserById(request.getId());
-        return DataUtils.copyProperties(user, UserRetrievalResponse.class);
+        return DataUtils.copyProperties(user, UserSelfResponse.class);
     }
 
     @Override
-    public List<UserRetrievalResponse> retrieveAllUsers() {
+    public List<UserSelfResponse> search() {
         return userRepository
                 .findAll()
                 .stream()
-                .map(user -> DataUtils.copyProperties(user, UserRetrievalResponse.class))
+                .map(user -> DataUtils.copyProperties(user, UserSelfResponse.class))
                 .collect(Collectors.toList());
     }
 

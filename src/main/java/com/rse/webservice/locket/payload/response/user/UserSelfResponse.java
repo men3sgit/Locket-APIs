@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserRetrievalResponse {
+public class UserSelfResponse {
     private Long id;
     private String email;
     private String name;

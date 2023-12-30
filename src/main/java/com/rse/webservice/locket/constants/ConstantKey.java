@@ -39,8 +39,15 @@ public class ConstantKey {
 
     // Basic messages
     public static final String MSG_SUCCESS = "Success";
+    public static final String MSG_FAIL = "Fail";
 
     // ERRORS
     public static final String ERROR_NOT_EXISTS = "Error not exists";
+    public static final String ERROR_INVALID = "Error invalid";
+
+    // KEY
+
+    public static final String KEY_AUTHORIZATION = "Authorization";
+    public static final String KEY_BEARER = "Bearer";
 
 }

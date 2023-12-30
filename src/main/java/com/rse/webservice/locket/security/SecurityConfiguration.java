@@ -1,6 +1,5 @@
 package com.rse.webservice.locket.security;
 
-import com.rse.webservice.locket.model.Role;
 import com.rse.webservice.locket.security.jwt.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -30,10 +28,10 @@ public class SecurityConfiguration {
                 .sessionManagement((sessionManager) -> sessionManager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .oauth2Login(oauth2Login ->
-                        oauth2Login.userInfoEndpoint(userInfoEndpoint ->
-                                userInfoEndpoint.oidcUserService(oidcUserService()))
-                )
+//                .oauth2Login(oauth2Login ->
+//                        oauth2Login.userInfoEndpoint(userInfoEndpoint ->
+//                                userInfoEndpoint.oidcUserService(oidcUserService()))
+//                )
                 .logout(Customizer.withDefaults());
 
         return http.build();
@@ -48,12 +46,5 @@ public class SecurityConfiguration {
                 "/");
 
     }
-
-
-    @Bean
-    public OidcUserService oidcUserService() {
-        return new OidcUserService();
-    }
-
 
 }
