@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 @Data
 public class ApiRequestException extends RuntimeException {
     private int code;
-    private String message;
     private Collection<Object> errorFields;
     private String type;
 

@@ -1,6 +1,6 @@
 package com.rse.webservice.locket.controller;
 
-import com.rse.webservice.locket.payload.request.user.UserCreateRequest;
+import com.rse.webservice.locket.payload.request.user.UserSelfRequest;
 import com.rse.webservice.locket.payload.response.ApiResponse;
 import com.rse.webservice.locket.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,12 +19,12 @@ public class UserController {
 
     @GetMapping
     public ApiResponse<?> getAllUsers() {
-        return new ApiResponse<>(userService.retrieveAllUsers());
+        return new ApiResponse<>(userService.search());
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<?> getUserById(@PathVariable(value = "id") Long id) {
-        return new ApiResponse<>(userService.retrieveUserById(UserCreateRequest.of(id)));
+    public ApiResponse<?> self(@PathVariable(value = "id") Long id) {
+        return new ApiResponse<>(userService.self(UserSelfRequest.of(id)));
     }
 
     @GetMapping("/principal")

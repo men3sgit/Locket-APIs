@@ -1,10 +1,10 @@
-package com.rse.webservice.locket.payload.request.user;
+package com.rse.webservice.locket.payload.request.post;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor(staticName = "of")
-public class UserCreateRequest {
+public class PostDeleteRequest {
     private Long id;
 }
