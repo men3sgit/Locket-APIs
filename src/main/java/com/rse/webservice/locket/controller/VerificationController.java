@@ -4,7 +4,7 @@ import com.rse.webservice.locket.payload.request.verify.NewUserVerificationReque
 import com.rse.webservice.locket.payload.request.verify.ResendTokenRequest;
 import com.rse.webservice.locket.payload.response.ApiResponse;
 import com.rse.webservice.locket.service.VerificationService;
-import com.rse.webservice.locket.utils.URL;
+import com.rse.webservice.locket.constants.URL;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

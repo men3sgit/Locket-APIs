@@ -2,7 +2,6 @@ package com.rse.webservice.locket.service.impl;
 
 import com.rse.webservice.locket.constants.ConstantKey;
 import com.rse.webservice.locket.exception.ApiRequestException;
-import com.rse.webservice.locket.model.Role;
 import com.rse.webservice.locket.model.User;
 import com.rse.webservice.locket.model.VerificationToken;
 import com.rse.webservice.locket.payload.request.auth.AuthenticationRequest;
@@ -42,10 +41,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new ApiRequestException(ConstantKey.MSG_EMAIL_TAKEN);
         }
         var newUser = DataUtils.copyProperties(request, User.class);
-        newUser.setRole(Role.USER);
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userRepository.save(newUser);
-
         // create new token
         var verificationToken = new VerificationToken(newUser.getId());
         verificationTokenRepository.save(verificationToken);

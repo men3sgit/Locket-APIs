@@ -1,7 +1,7 @@
 package com.rse.webservice.locket.repository;
 
 import com.rse.webservice.locket.model.User;
-import com.rse.webservice.locket.utils.Const;
+import com.rse.webservice.locket.constants.Const;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

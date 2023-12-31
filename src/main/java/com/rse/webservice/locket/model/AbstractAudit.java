@@ -1,6 +1,6 @@
 package com.rse.webservice.locket.model;
 
-import com.rse.webservice.locket.utils.Const;
+import com.rse.webservice.locket.constants.Const;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
