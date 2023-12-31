@@ -1,6 +1,8 @@
 package com.rse.webservice.locket.security.jwt;
 
-import com.rse.webservice.locket.constants.Key;
+import com.rse.webservice.locket.constants.ConstantKey;
+import com.rse.webservice.locket.exception.ApiRequestException;
+import com.rse.webservice.locket.security.jwt.impl.JwtServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +24,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
-    private final JwtUtils jwtUtils;
+    private final JwtServiceImpl jwtUtils;
 
     @Override
     protected void doFilterInternal(
@@ -30,7 +32,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain) throws ServletException, IOException {
 
-        if (request.getHeader(Key.KEY_AUTHORIZATION) == null) {
+        if (request.getHeader(ConstantKey.KEY_AUTHORIZATION) == null) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -38,7 +40,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String token = parseJwt(request);
         String username = jwtUtils.extractUsername(token);
-        if (!Objects.isNull(username) && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (Objects.nonNull(username) && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             if (jwtUtils.validateToken(token, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
@@ -56,13 +58,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
 
-
     }
 
     private String parseJwt(HttpServletRequest request) {
-        String headerAuth = request.getHeader(Key.KEY_AUTHORIZATION);
+        String headerAuth = request.getHeader(ConstantKey.KEY_AUTHORIZATION);
 
-        if (headerAuth.startsWith(Key.KEY_BEARER)) {
+        if (headerAuth.startsWith(ConstantKey.KEY_BEARER)) {
             return headerAuth.split("\\s++")[1];
         }
 
