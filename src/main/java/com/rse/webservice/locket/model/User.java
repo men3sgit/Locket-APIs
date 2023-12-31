@@ -1,50 +1,49 @@
 package com.rse.webservice.locket.model;
 
-import com.rse.webservice.locket.utils.Const;
+import com.rse.webservice.locket.constants.Const;
+import com.rse.webservice.locket.constants.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.stream.Collectors;
 
 @Table(name = "users")
 @Entity
 @Data
 public class User extends AbstractAudit implements UserDetails {
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "email", unique = true)
-    private String email;
-
-    @Column(name = "phone")
-    private String phone;
+    @Column(name = "username", unique = true)
+    private String username;
 
     @Column(name = "password")
     private String password;
+
     @Column(name = "locked")
     private Boolean locked;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @Column(name = "roles")
+    private String roles;
 
     public User() {
-        locked = Boolean.FALSE;
+        this.locked = Boolean.FALSE;
+        this.roles = Role.DEFAULT_ROLE;
         setStatus(Const.GeneralStatus.INACTIVE);
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority granted = new SimpleGrantedAuthority(role.toString());
-        return Collections.singletonList(granted);
+        return Arrays.stream(roles.split(", "))
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
     @Override
     public String getUsername() {
-        return this.email;
+        return this.username;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.rse.webservice.locket.utils;
+package com.rse.webservice.locket.constants;
 
 public interface URL {
     String DOMAIN = "http://localhost:8000";
