@@ -10,7 +10,7 @@ import com.rse.webservice.locket.payload.response.auth.AuthenticationResponse;
 import com.rse.webservice.locket.payload.response.auth.RegistrationResponse;
 import com.rse.webservice.locket.repository.UserRepository;
 import com.rse.webservice.locket.repository.VerificationTokenRepository;
-import com.rse.webservice.locket.security.jwt.JwtUtils;
+import com.rse.webservice.locket.security.jwt.impl.JwtServiceImpl;
 import com.rse.webservice.locket.service.AuthenticationService;
 import com.rse.webservice.locket.service.VerificationService;
 import com.rse.webservice.locket.utils.DataUtils;
@@ -27,20 +27,22 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtUtils jwtUtils;
+    private final JwtServiceImpl jwtUtils;
     private final UserDetailsService userDetailsService;
     private final AuthenticationManager authenticationManager;
     private final VerificationTokenRepository verificationTokenRepository;
     private final VerificationService verificationService;
 
 
+    //TODO: Refactoring can use phone number or something else
     @Override
     public RegistrationResponse addNewUser(RegistrationRequest request) {
         // create new user
-        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+        if (userRepository.findByUsername(request.getEmail()).isPresent()) {
             throw new ApiRequestException(ConstantKey.MSG_EMAIL_TAKEN);
         }
         var newUser = DataUtils.copyProperties(request, User.class);
+        newUser.setUsername(request.getEmail());
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userRepository.save(newUser);
         // create new token

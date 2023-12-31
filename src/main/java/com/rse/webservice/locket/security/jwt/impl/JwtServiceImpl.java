@@ -1,5 +1,6 @@
-package com.rse.webservice.locket.security.jwt;
+package com.rse.webservice.locket.security.jwt.impl;
 
+import com.rse.webservice.locket.security.jwt.JwtService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -10,7 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.security.Key;
+import javax.crypto.SecretKey;
+import java.security.PrivateKey;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,13 +21,14 @@ import java.util.function.Function;
 
 
 @Service
-public class JwtUtils {
-    public static final Logger LOGGER = LoggerFactory.getLogger(JwtUtils.class);
+public class JwtServiceImpl implements JwtService {
+    public static final Logger LOGGER = LoggerFactory.getLogger(JwtServiceImpl.class);
     @Value("${locket.app.jwt.secretKey}")
     private String SECRET_KEY;
     @Value("${locket.app.jwt.expirationTimeMs}")
     private int EXPIRATION;
 
+    @Override
     public String extractUsername(String token) {
         return extractClaims(token, Claims::getSubject);
     }
@@ -34,6 +37,7 @@ public class JwtUtils {
         return extractClaims(token, Claims::getExpiration);
     }
 
+    @Override
     public boolean validateToken(String token, UserDetails userDetails) {
         try {
             final String username = extractUsername(token);
@@ -52,37 +56,38 @@ public class JwtUtils {
         return false;
     }
 
-    private boolean isTokenExpired(String token) {
+    @Override
+    public boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
+    @Override
     public String generateToken(Map<String, Object> extractClaims,
                                 UserDetails userDetails) {
         System.err.println(EXPIRATION);
         return Jwts.builder()
-                .setClaims(extractClaims)
-                .setSubject(userDetails.getUsername())
-                .setIssuer(new Date().toString())
-                .setExpiration(calculateExpirationDate())
-                .signWith(getSignInKey())
+                .claims(extractClaims)
+                .subject(userDetails.getUsername())
+                .issuedAt(new Date())
+                .issuer(new Date().toString())
+                .expiration(calculateExpirationDate())
+                .signWith(getSecretKey())
                 .compact();
     }
 
+    @Override
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
     private Date calculateExpirationDate() {
-
-        // Get the current date and time
         Calendar calendar = Calendar.getInstance();
-        // Add expirationHours to the current date and time
         calendar.add(Calendar.MINUTE, EXPIRATION);
-        // Get the updated date and time
         return calendar.getTime();
     }
 
     // TODO get All properties Claims
+    @Override
     public <T> T extractClaims(String token, Function<Claims, T> claimResolver) {
         final Claims claims = extractAllClaims(token);
         return claimResolver.apply(claims);
@@ -91,14 +96,13 @@ public class JwtUtils {
 
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(getSignInKey())
+                .setSigningKey(getSecretKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
 
-    private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
-        return Keys.hmacShaKeyFor(keyBytes);
+    private SecretKey getSecretKey() {
+        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 }

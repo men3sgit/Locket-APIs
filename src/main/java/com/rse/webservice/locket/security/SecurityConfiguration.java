@@ -1,5 +1,6 @@
 package com.rse.webservice.locket.security;
 
+import com.rse.webservice.locket.exception.ApiRequestException;
 import com.rse.webservice.locket.security.jwt.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -42,7 +44,6 @@ public class SecurityConfiguration {
         return (web) -> web.ignoring().requestMatchers("/api/v*/auth/register",
                 "/api/v*/auth/login",
                 "/api/v*/verify/**",
-                "/api/v1/users",
                 "/");
 
     }
