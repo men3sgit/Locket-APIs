@@ -57,6 +57,7 @@ locket:
     jwt:
       secretKey: c3ckfrhaKW8Mplm9ylgQCsMLoFmsip/ouP1u51eWRLRtCgDA6OFoLH+azJtNEDUYODPqhm/Kms2jYJdaIczcrap9vBVrbd7qMk1AuoNJjZg=
       expirationTimeMs: 1800000 # 30 minutes
+      refreshTokenExpirationTimeMs: 86400000 # a day
 
 
 

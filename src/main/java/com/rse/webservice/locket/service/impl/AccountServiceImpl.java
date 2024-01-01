@@ -1,7 +1,9 @@
 package com.rse.webservice.locket.service.impl;
 
+import com.rse.webservice.locket.payload.account.requests.*;
+import com.rse.webservice.locket.payload.account.requests.responses.*;
+import com.rse.webservice.locket.payload.account.responses.*;
 import com.rse.webservice.locket.payload.request.account.*;
-import com.rse.webservice.locket.payload.response.account.*;
 import com.rse.webservice.locket.service.AccountService;
 import org.springframework.stereotype.Service;
 

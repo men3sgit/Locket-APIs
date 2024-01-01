@@ -1,8 +1,8 @@
 package com.rse.webservice.locket.controller;
 
-import com.rse.webservice.locket.payload.request.auth.AuthenticationRequest;
-import com.rse.webservice.locket.payload.request.auth.RegistrationRequest;
-import com.rse.webservice.locket.payload.response.ApiResponse;
+import com.rse.webservice.locket.payload.auth.requests.AuthenticationRequest;
+import com.rse.webservice.locket.payload.auth.requests.RegistrationRequest;
+import com.rse.webservice.locket.payload.ApiResponse;
 import com.rse.webservice.locket.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

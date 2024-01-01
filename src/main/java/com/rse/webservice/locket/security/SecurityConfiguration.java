@@ -1,7 +1,6 @@
 package com.rse.webservice.locket.security;
 
-import com.rse.webservice.locket.exception.ApiRequestException;
-import com.rse.webservice.locket.security.jwt.JwtAuthFilter;
+import com.rse.webservice.locket.security.filter.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -41,11 +39,14 @@ public class SecurityConfiguration {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/api/v*/auth/register",
-                "/api/v*/auth/login",
-                "/api/v*/verify/**",
-                "/");
-
+        return (web) -> web.ignoring().requestMatchers(IGNORED_PATH);
     }
+
+    public static final String[] IGNORED_PATH = new String[]{
+            "/api/v*/auth/register",
+            "/api/v*/auth/login",
+            "/api/v*/verify/**",
+            "/"
+    };
 
 }

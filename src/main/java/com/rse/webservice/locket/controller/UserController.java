@@ -1,7 +1,7 @@
 package com.rse.webservice.locket.controller;
 
-import com.rse.webservice.locket.payload.request.user.UserSelfRequest;
-import com.rse.webservice.locket.payload.response.ApiResponse;
+import com.rse.webservice.locket.payload.user.requests.UserSelfRequest;
+import com.rse.webservice.locket.payload.ApiResponse;
 import com.rse.webservice.locket.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

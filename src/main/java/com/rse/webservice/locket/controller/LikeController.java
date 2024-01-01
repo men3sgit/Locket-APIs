@@ -1,10 +1,10 @@
 package com.rse.webservice.locket.controller;
 
-import com.rse.webservice.locket.payload.request.like.LikeCreateRequest;
-import com.rse.webservice.locket.payload.request.like.LikeDeleteRequest;
-import com.rse.webservice.locket.payload.request.like.LikeSearchRequest;
-import com.rse.webservice.locket.payload.request.like.LikeSelfRequest;
-import com.rse.webservice.locket.payload.response.ApiResponse;
+import com.rse.webservice.locket.payload.like.requests.LikeCreateRequest;
+import com.rse.webservice.locket.payload.like.requests.LikeDeleteRequest;
+import com.rse.webservice.locket.payload.like.requests.LikeSearchRequest;
+import com.rse.webservice.locket.payload.like.requests.LikeSelfRequest;
+import com.rse.webservice.locket.payload.ApiResponse;
 import com.rse.webservice.locket.service.LikeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

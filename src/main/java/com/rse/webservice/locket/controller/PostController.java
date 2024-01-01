@@ -1,8 +1,9 @@
 package com.rse.webservice.locket.controller;
 
 
+import com.rse.webservice.locket.payload.post.requests.*;
 import com.rse.webservice.locket.payload.request.post.*;
-import com.rse.webservice.locket.payload.response.ApiResponse;
+import com.rse.webservice.locket.payload.ApiResponse;
 import com.rse.webservice.locket.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
