@@ -1,10 +1,10 @@
 package com.rse.webservice.locket.controller;
 
-import com.rse.webservice.locket.payload.request.account.AccountCreateRequest;
-import com.rse.webservice.locket.payload.request.account.AccountDeleteRequest;
-import com.rse.webservice.locket.payload.request.account.AccountSelfRequest;
-import com.rse.webservice.locket.payload.request.account.AccountUpdateRequest;
-import com.rse.webservice.locket.payload.response.ApiResponse;
+import com.rse.webservice.locket.payload.account.requests.AccountCreateRequest;
+import com.rse.webservice.locket.payload.account.requests.AccountDeleteRequest;
+import com.rse.webservice.locket.payload.account.requests.AccountSelfRequest;
+import com.rse.webservice.locket.payload.account.requests.AccountUpdateRequest;
+import com.rse.webservice.locket.payload.ApiResponse;
 import com.rse.webservice.locket.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

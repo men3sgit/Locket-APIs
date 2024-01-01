@@ -2,8 +2,8 @@ package com.rse.webservice.locket.service.impl;
 
 import com.rse.webservice.locket.exception.ApiRequestException;
 import com.rse.webservice.locket.model.User;
-import com.rse.webservice.locket.payload.request.user.UserSelfRequest;
-import com.rse.webservice.locket.payload.response.user.UserSelfResponse;
+import com.rse.webservice.locket.payload.user.requests.UserSelfRequest;
+import com.rse.webservice.locket.payload.user.responses.UserSelfResponse;
 import com.rse.webservice.locket.repository.UserRepository;
 import com.rse.webservice.locket.service.UserService;
 import com.rse.webservice.locket.utils.DataUtils;

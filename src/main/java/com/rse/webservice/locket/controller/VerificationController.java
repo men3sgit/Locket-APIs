@@ -1,8 +1,8 @@
 package com.rse.webservice.locket.controller;
 
-import com.rse.webservice.locket.payload.request.verify.NewUserVerificationRequest;
-import com.rse.webservice.locket.payload.request.verify.ResendTokenRequest;
-import com.rse.webservice.locket.payload.response.ApiResponse;
+import com.rse.webservice.locket.payload.verify.requests.NewUserVerificationRequest;
+import com.rse.webservice.locket.payload.verify.requests.ResendTokenRequest;
+import com.rse.webservice.locket.payload.ApiResponse;
 import com.rse.webservice.locket.service.VerificationService;
 import com.rse.webservice.locket.constants.URL;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class VerificationController {
         return new ApiResponse<>(verificationService.verifyNewUser(request));
     }
     @GetMapping(path = URL.RESEND_TOKEN)
-    public ApiResponse<?> resendToken(ResendTokenRequest request){
+    public ApiResponse<?> resentRegistrationConfirmToken(ResendTokenRequest request){
         return null;
     }
 }

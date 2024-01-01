@@ -1,14 +1,14 @@
 package com.rse.webservice.locket.service.impl;
 
 import com.rse.webservice.locket.model.Like;
-import com.rse.webservice.locket.payload.request.like.LikeCreateRequest;
-import com.rse.webservice.locket.payload.request.like.LikeDeleteRequest;
-import com.rse.webservice.locket.payload.request.like.LikeSearchRequest;
-import com.rse.webservice.locket.payload.request.like.LikeSelfRequest;
-import com.rse.webservice.locket.payload.response.like.LikeCreateResponse;
-import com.rse.webservice.locket.payload.response.like.LikeDeleteResponse;
-import com.rse.webservice.locket.payload.response.like.LikeSearchResponse;
-import com.rse.webservice.locket.payload.response.like.LikeSelfResponse;
+import com.rse.webservice.locket.payload.like.requests.LikeCreateRequest;
+import com.rse.webservice.locket.payload.like.requests.LikeDeleteRequest;
+import com.rse.webservice.locket.payload.like.requests.LikeSearchRequest;
+import com.rse.webservice.locket.payload.like.requests.LikeSelfRequest;
+import com.rse.webservice.locket.payload.like.responses.LikeCreateResponse;
+import com.rse.webservice.locket.payload.like.responses.LikeDeleteResponse;
+import com.rse.webservice.locket.payload.like.responses.LikeSearchResponse;
+import com.rse.webservice.locket.payload.like.responses.LikeSelfResponse;
 import com.rse.webservice.locket.repository.LikeRepository;
 import com.rse.webservice.locket.service.LikeService;
 import com.rse.webservice.locket.utils.DataUtils;
