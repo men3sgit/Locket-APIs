@@ -1,4 +1,4 @@
-package com.rse.webservice.locket.service.impl;
+package com.rse.webservice.locket.payload.freshtoken.impl;
 
 import com.rse.webservice.locket.utils.EmailUtils;
 import com.rse.webservice.locket.utils.templates.TemplateConfig;

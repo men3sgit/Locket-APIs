@@ -1,4 +1,4 @@
-package com.rse.webservice.locket.service.impl;
+package com.rse.webservice.locket.payload.freshtoken.impl;
 
 import com.rse.webservice.locket.constants.ConstantKey;
 import com.rse.webservice.locket.exception.ApiRequestException;
@@ -8,10 +8,12 @@ import com.rse.webservice.locket.payload.auth.requests.AuthenticationRequest;
 import com.rse.webservice.locket.payload.auth.requests.RegistrationRequest;
 import com.rse.webservice.locket.payload.auth.responses.AuthenticationResponse;
 import com.rse.webservice.locket.payload.auth.responses.RegistrationResponse;
+import com.rse.webservice.locket.payload.freshtoken.requests.RefreshTokenCreateRequest;
 import com.rse.webservice.locket.repository.UserRepository;
 import com.rse.webservice.locket.repository.VerificationTokenRepository;
 import com.rse.webservice.locket.security.jwt.impl.JwtServiceImpl;
 import com.rse.webservice.locket.service.AuthenticationService;
+import com.rse.webservice.locket.service.RefreshTokenService;
 import com.rse.webservice.locket.service.VerificationService;
 import com.rse.webservice.locket.utils.DataUtils;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final VerificationTokenRepository verificationTokenRepository;
     private final VerificationService verificationService;
+    private final RefreshTokenService refreshTokenService;
 
 
     //TODO: Refactoring can use phone number or something else
@@ -62,6 +65,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             authenticationManager.authenticate(authentication);// check enable user or user locked
 
             String token = jwtUtils.generateToken(userDetails);
+            Long userId = userRepository.findByUsername(userDetails.getUsername()).get().getId();
+            refreshTokenService.create(RefreshTokenCreateRequest.of(userId));
 
             return AuthenticationResponse.of(token);
         } catch (Exception e) {
