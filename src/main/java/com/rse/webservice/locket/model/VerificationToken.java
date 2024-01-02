@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
+import java.util.UUID;
 
 @Table(name = "verification_tokens")
 @Entity
@@ -34,7 +35,7 @@ public class VerificationToken extends AbstractAudit {
     private Timestamp verifiedAt;
 
     public VerificationToken(Long userId) {
-        this.token = Generator.generateRandomBase64Token(false);
+        this.token = UUID.randomUUID().toString();
         this.userId = userId;
         this.expiredAt = new Timestamp(System.currentTimeMillis() + EXPIRATION);
     }

@@ -22,7 +22,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Service
 public class FileServiceImpl implements FileService {
-    private static final String DOWNLOAD_PATH = URL.DOMAIN + "/api/v1/files/download/";
+    private static final String STORED_FILE_ENDPOINT = URL.DOMAIN + "/api/v1/files/";
     private final FileRepository fileRepository;
     private final StorageService storageService;
 
@@ -33,10 +33,10 @@ public class FileServiceImpl implements FileService {
         String fileName = storageService.uploadFile(multipartFile);
         var newFile = File.builder()
                 .name(fileName)
-                .path(DOWNLOAD_PATH + fileName)
                 .size(multipartFile.getSize())
                 .extension(FileUtils.getFileExtension(Objects.requireNonNull(multipartFile.getOriginalFilename())))
                 .build();
+        newFile.setPath(STORED_FILE_ENDPOINT + newFile.getId());
         fileRepository.save(newFile);
         return FileUploadResponse.of(newFile.getId());
     }
