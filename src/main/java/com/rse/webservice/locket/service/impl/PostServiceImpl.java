@@ -21,13 +21,13 @@ import org.springframework.stereotype.Service;
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final CommonService commonService;
-
     private final AccountService accountService;
 
 
     @Override
     public PostCreateResponse create(PostCreateRequest request) {
         var newPost = DataUtils.copyProperties(request, Post.class);
+
         newPost.setUserId(commonService.getLoginId());
         postRepository.save(newPost);
         return PostCreateResponse.of(newPost.getId());
