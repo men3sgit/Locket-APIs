@@ -1,2 +1,8 @@
-package com.rse.webservice.locket.payload.file.responses;public class FileDeleteResponse {
+package com.rse.webservice.locket.payload.file.responses;
+
+import lombok.Data;
+
+@Data
+public class FileDeleteResponse {
+    private Boolean success;
 }
