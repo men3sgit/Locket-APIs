@@ -1,6 +1,5 @@
 package com.rse.webservice.locket.model;
 
-import com.rse.webservice.locket.utils.Generator;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

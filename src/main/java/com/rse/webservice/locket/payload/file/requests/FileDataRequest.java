@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor(staticName = "of")
-public class FileDeleteRequest {
+public class FileDataRequest {
     private Long id;
+
 }

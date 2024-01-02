@@ -37,9 +37,8 @@ public class PostController {
         return new ApiResponse<>(response);
     }
 
-    @PutMapping("/{id}")
-    public ApiResponse<?> update(@PathVariable Long id, PostUpdateRequest request) {
-        request.setId(id);
+    @PutMapping
+    public ApiResponse<?> update(PostUpdateRequest request) {
         var response = postService.update(request);
         return new ApiResponse<>(response);
     }

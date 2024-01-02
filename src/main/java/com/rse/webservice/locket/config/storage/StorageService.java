@@ -8,7 +8,7 @@ public interface StorageService {
 
     byte[] downloadFile(String fileName);
 
-    boolean deleteFile(String fileName);
+    void deleteFile(String fileName);
 
 
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor(staticName = "of")
-public class FileDeleteResponse {
-    private Boolean success;
+public class FileDataResponse {
+    private byte[] content;
+    private String name;
 }

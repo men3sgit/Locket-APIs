@@ -60,6 +60,13 @@ public class FileUtils {
             return ""; // File doesn't exist
         }
 
+        return generateFileSizeString(fileSize);
+    }
+    public static String getFileSizeFormatted(Long fileSize) {
+        return generateFileSizeString(fileSize);
+    }
+
+    private static String generateFileSizeString(Long fileSize) {
         int sizeUnit = (int) (Math.log(fileSize) / Math.log(1024));
         return switch (sizeUnit) {
             case 0 -> fileSize + BYTES;
@@ -162,14 +169,18 @@ public class FileUtils {
     //====================================== 01 Jan 2024 released ==========================================================================
 
     public static String generateNewFileName(String originalFileName, String newFileName) {
-        return newFileName + getFileExtension(originalFileName);
+        return remoteExtension(newFileName) + "." + getFileExtension(originalFileName);
+    }
+
+    private static String remoteExtension(String fileName) {
+        return fileName.substring(0, fileName.lastIndexOf('.'));
     }
 
     public static String generateNewFileName(File file, String newFileName) {
         return generateNewFileName(file.getName(), newFileName);
     }
 
-    public static File convertMultipartFileToFile(MultipartFile multipartFile)  {
+    public static File convertMultipartFileToFile(MultipartFile multipartFile) {
         var fileName = Objects.requireNonNull(multipartFile.getOriginalFilename());
         File file = new File(fileName);
 
