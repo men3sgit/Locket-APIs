@@ -4,6 +4,7 @@ import com.rse.webservice.locket.constants.ConstantKey;
 import com.rse.webservice.locket.exception.ApiRequestException;
 import com.rse.webservice.locket.model.User;
 import com.rse.webservice.locket.model.VerificationToken;
+import com.rse.webservice.locket.payload.account.requests.AccountCreateRequest;
 import com.rse.webservice.locket.payload.auth.requests.AuthenticationRequest;
 import com.rse.webservice.locket.payload.auth.requests.RegistrationRequest;
 import com.rse.webservice.locket.payload.auth.responses.AuthenticationResponse;
@@ -12,6 +13,7 @@ import com.rse.webservice.locket.payload.freshtoken.requests.RefreshTokenCreateR
 import com.rse.webservice.locket.repository.UserRepository;
 import com.rse.webservice.locket.repository.VerificationTokenRepository;
 import com.rse.webservice.locket.security.jwt.impl.JwtServiceImpl;
+import com.rse.webservice.locket.service.AccountService;
 import com.rse.webservice.locket.service.AuthenticationService;
 import com.rse.webservice.locket.service.RefreshTokenService;
 import com.rse.webservice.locket.service.VerificationService;
@@ -35,6 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final VerificationTokenRepository verificationTokenRepository;
     private final VerificationService verificationService;
     private final RefreshTokenService refreshTokenService;
+    private final AccountService accountService;
 
 
     //TODO: Refactoring can use phone number or something else
@@ -48,6 +51,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         newUser.setUsername(request.getEmail());
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userRepository.save(newUser);
+        //create new account
+        var accountCreateRequest = AccountCreateRequest.builder()
+                .userId(newUser.getId())
+                .firstName(request.getName())
+                .phoneNumber(request.getPhone())
+                .build();
+        accountService.create(accountCreateRequest);
+
         // create new token
         var verificationToken = new VerificationToken(newUser.getId());
         verificationTokenRepository.save(verificationToken);

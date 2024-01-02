@@ -28,11 +28,6 @@ public class AccountController {
         return new ApiResponse<>(response);
     }
 
-    @PostMapping(path = {"", "/", "/create"})
-    public ApiResponse<?> create(@RequestBody AccountCreateRequest request) {
-        var response = accountService.create(request);
-        return new ApiResponse<>(response);
-    }
 
     @DeleteMapping("/{id}")
     public ApiResponse<?> delete(@PathVariable Long id){

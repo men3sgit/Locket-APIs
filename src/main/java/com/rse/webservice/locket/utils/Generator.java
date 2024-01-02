@@ -7,7 +7,7 @@ public class Generator {
     private static final int DEFAULT_BYTES = 32;
 
     public static String generateRandomBase64Token() {
-        return generateRandomBase64Token(DEFAULT_BYTES);
+        return generateRandomBase64Token(DEFAULT_BYTES).replaceAll("[+]","");
     }
     public static String generateRandomBase64Token(boolean hasNumber) {
         return generateRandomBase64Token(DEFAULT_BYTES, hasNumber);
