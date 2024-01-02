@@ -75,7 +75,7 @@ locket:
 
     storage:
       bucket:
-        name: locket-bucket
+        name: locket-bucket/file-upload
 
 
 # S3

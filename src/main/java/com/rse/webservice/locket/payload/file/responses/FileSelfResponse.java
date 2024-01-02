@@ -17,4 +17,5 @@ public class FileSelfResponse {
     private String extension;
 
     private Timestamp createdAt;
+
 }
