@@ -1,10 +1,9 @@
-package com.rse.webservice.locket.service.impl;
+package com.rse.webservice.locket.payload.freshtoken.impl;
 
 import com.rse.webservice.locket.exception.ApiRequestException;
 import com.rse.webservice.locket.model.Post;
 import com.rse.webservice.locket.payload.account.requests.AccountSelfRequest;
 import com.rse.webservice.locket.payload.post.requests.*;
-import com.rse.webservice.locket.payload.request.post.*;
 import com.rse.webservice.locket.payload.post.responses.PostCreateResponse;
 import com.rse.webservice.locket.payload.post.responses.PostSearchResponse;
 import com.rse.webservice.locket.payload.post.responses.PostSelfResponse;
