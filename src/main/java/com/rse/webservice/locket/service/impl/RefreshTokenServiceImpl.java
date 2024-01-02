@@ -21,7 +21,7 @@ import java.sql.Timestamp;
 @Service
 @RequiredArgsConstructor
 public class RefreshTokenServiceImpl implements RefreshTokenService {
-    @Value("${locket.app.jwt.refreshToken.expirationTimeMs}")
+    @Value("${locket.app.jwt.refresh-token.expiration-time-ms}")
     private long expirationMs;
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtService jwtService;
