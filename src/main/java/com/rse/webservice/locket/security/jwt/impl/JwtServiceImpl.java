@@ -19,13 +19,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-
 @Service
 public class JwtServiceImpl implements JwtService {
     public static final Logger LOGGER = LoggerFactory.getLogger(JwtServiceImpl.class);
     @Value("${locket.app.jwt.secretKey}")
     private String SECRET_KEY;
-    @Value("${locket.app.jwt.expirationTimeMs}")
+    @Value("${locket.app.jwt.expiration-time-ms}")
     private int EXPIRATION;
 
     @Override

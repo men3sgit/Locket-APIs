@@ -1,6 +1,7 @@
 package com.rse.webservice.locket.utils;
 
 
+import com.rse.webservice.locket.exception.ApiRequestException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -168,14 +169,14 @@ public class FileUtils {
         return generateNewFileName(file.getName(), newFileName);
     }
 
-    public static File convertMultipartFileToFile(MultipartFile multipartFile) throws IOException {
+    public static File convertMultipartFileToFile(MultipartFile multipartFile)  {
         var fileName = Objects.requireNonNull(multipartFile.getOriginalFilename());
         File file = new File(fileName);
 
         try (FileOutputStream fos = new FileOutputStream(file)) {
             fos.write(multipartFile.getBytes());
         } catch (IOException e) {
-            throw new IOException("Error converting MultipartFile to File", e);
+            throw new ApiRequestException("Error converting MultipartFile to File");
         }
 
         return file;
