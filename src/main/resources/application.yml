@@ -21,7 +21,7 @@ spring:
             required: true
 
   datasource:
-    password: menespostgres
+    password: namnamnam
     username: postgres
     url: jdbc:postgresql://localhost:5432/mobile_v2?serverTimezone=UTC
 
