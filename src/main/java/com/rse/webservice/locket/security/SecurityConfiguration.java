@@ -46,7 +46,8 @@ public class SecurityConfiguration {
             "/api/v*/auth/register",
             "/api/v*/auth/login",
             "/api/v*/verify/**",
-            "/"
+            "/",
+            "/api/v1/refresh-token/self"
     };
 
 }

@@ -1,13 +1,11 @@
 package com.rse.webservice.locket.payload.freshtoken.responses;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
+@AllArgsConstructor(staticName = "of")
 public class RefreshTokenCreateResponse {
-    private String accessToken;
-    private String type;
-    private String refreshToken;
-    private Long userId;
+    private Long id;
 }

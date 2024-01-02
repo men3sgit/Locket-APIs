@@ -1,4 +1,4 @@
-package com.rse.webservice.locket.payload.freshtoken.impl;
+package com.rse.webservice.locket.service.impl;
 
 import com.rse.webservice.locket.exception.ApiRequestException;
 import com.rse.webservice.locket.model.User;

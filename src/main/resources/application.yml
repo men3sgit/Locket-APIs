@@ -25,11 +25,13 @@ spring:
     username: postgres
     url: jdbc:postgresql://localhost:5432/mobile_v2?serverTimezone=UTC
 
+
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
 
   #Oauth2
   security:
@@ -44,6 +46,17 @@ spring:
               - profile
               - email
 
+
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 5MB
+      max-request-size: 10MB
+
+
+#============================================================== SPRING ========================================================================
+
 logging:
   level:
     org:
@@ -56,8 +69,26 @@ locket:
     name: Locket
     jwt:
       secretKey: c3ckfrhaKW8Mplm9ylgQCsMLoFmsip/ouP1u51eWRLRtCgDA6OFoLH+azJtNEDUYODPqhm/Kms2jYJdaIczcrap9vBVrbd7qMk1AuoNJjZg=
-      expirationTimeMs: 1800000 # 30 minutes
-      refreshTokenExpirationTimeMs: 86400000 # a day
+      expiration-time-ms: 1800000 # 30 minutes
+      refresh-token:
+        expiration-time-ms: 86400000 # a day
+
+    storage:
+      bucket:
+        name: locket-bucket
+
+
+# S3
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAZL72TT2765YSC5MW
+      secret-key: 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
+    region:
+      static: ap-southeast-1
+    stack:
+      auto: false
+
 
 
 

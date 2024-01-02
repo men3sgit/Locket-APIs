@@ -34,7 +34,7 @@ public class VerificationToken extends AbstractAudit {
     private Timestamp verifiedAt;
 
     public VerificationToken(Long userId) {
-        this.token = Generator.generateRandomBase64WithoutNumberToken();
+        this.token = Generator.generateRandomBase64Token(false);
         this.userId = userId;
         this.expiredAt = new Timestamp(System.currentTimeMillis() + EXPIRATION);
     }

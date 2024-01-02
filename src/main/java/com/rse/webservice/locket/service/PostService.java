@@ -1,7 +1,6 @@
 package com.rse.webservice.locket.service;
 
 import com.rse.webservice.locket.payload.post.requests.*;
-import com.rse.webservice.locket.payload.request.post.*;
 import com.rse.webservice.locket.payload.post.responses.PostCreateResponse;
 import com.rse.webservice.locket.payload.post.responses.PostSearchResponse;
 import com.rse.webservice.locket.payload.post.responses.PostSelfResponse;

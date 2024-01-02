@@ -1,4 +1,4 @@
-package com.rse.webservice.locket.payload.freshtoken.impl;
+package com.rse.webservice.locket.service.impl;
 
 import com.rse.webservice.locket.payload.account.requests.*;
 import com.rse.webservice.locket.payload.account.responses.*;
