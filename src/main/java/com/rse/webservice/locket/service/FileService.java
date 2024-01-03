@@ -12,6 +12,8 @@ public interface FileService {
 
     FileDeleteResponse delete(FileDeleteRequest request);
 
-    FileDataResponse getData(FileDataRequest request);
+    FileDownloadResponse download(FileDownloadRequest request);
+
+    FileUpdateResponse update(FileUpdateRequest request);
 
 }

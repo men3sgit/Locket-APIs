@@ -24,6 +24,8 @@ public class File extends AbstractAudit {
 
     private String extension;
 
+    private String type;
+
     @PostPersist
     public void setPath() {
         this.setPath(path + this.getId());

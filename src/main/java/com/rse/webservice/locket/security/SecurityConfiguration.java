@@ -48,7 +48,8 @@ public class SecurityConfiguration {
             "/api/v*/verify/**",
             "/",
             "/api/v1/refresh-token/self",
-            "/api/v1/files/**"
+            "/api/v1/files/**",
+            "/api/v1/images/**"
     };
 
 }

@@ -1,13 +1,11 @@
-package com.rse.webservice.locket.payload.file.requests;
+package com.rse.webservice.locket.payload.image.requests;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
-@Builder
 @AllArgsConstructor(staticName = "of")
-public class FileUploadRequest {
+public class ImageUploadRequest {
     private MultipartFile file;
 }
