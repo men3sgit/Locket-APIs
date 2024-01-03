@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor(staticName = "of")
-public class FileDataRequest {
+public class FileDownloadRequest {
     private Long id;
 
 }

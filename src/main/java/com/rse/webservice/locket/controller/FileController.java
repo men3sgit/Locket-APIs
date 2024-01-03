@@ -19,8 +19,8 @@ public class FileController {
 
     @GetMapping("/{id}/download")
     public ResponseEntity<?> download(@PathVariable Long id) {
-        var request = FileDataRequest.of(id);
-        var response = fileService.getData(request);
+        var request = FileDownloadRequest.of(id);
+        var response = fileService.download(request);
         // Set response headers
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);

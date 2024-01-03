@@ -1,11 +1,11 @@
-package com.rse.webservice.locket.payload.file.responses;
+package com.rse.webservice.locket.payload.image.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor(staticName = "of")
-public class FileDataResponse {
+public class ImageDownloadResponse {
     private byte[] content;
     private String name;
 }
