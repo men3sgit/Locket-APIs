@@ -19,97 +19,12 @@ public class FileUtils {
     /**
      * Interface for representing file size units and a constant for indicating files that are too large to display.
      */
-    public interface Unit {
-        String BYTES = "B";
-        String KILOBYTES = "KB";
-        String MEGABYTES = "MB";
-        String GIGABYTES = "GB";
-        String TOO_LARGE = "Too large to display";
-    }
-
-    /**
-     * Interface for defining file types.
-     */
-    public interface Type {
-        String TEXT = "Text";
-        String DOCUMENT = "Document";
-        String SPREADSHEET = "Spreadsheet";
-        String IMAGE = "Image";
-        String AUDIO = "Audio";
-        String VIDEO = "Video";
-        String EXECUTABLE = "Executable";
-        String ARCHIVE = "Archive";
-        String DATABASE = "Database";
-        String PROGRAMMING = "Programming";
-        String CONFIGURATION = "Configuration";
-    }
-
-    /**
-     * Interface for file extensions.
-     */
-    public interface Extension {
-        // Text Files
-        String TXT = ".txt";
-        String CSV = ".csv";
-        String XML = ".xml";
-        String JSON = ".json";
-
-        // Document Files
-        String DOC = ".doc";
-        String DOCX = ".docx";
-        String PDF = ".pdf";
-
-        // Spreadsheet Files
-        String XLS = ".xls";
-        String XLSX = ".xlsx";
-        String ODS = ".ods";
-
-        // Image Files
-        String JPG = ".jpg";
-        String JPEG = ".jpeg";
-        String PNG = ".png";
-        String GIF = ".gif";
-        String BMP = ".bmp";
-        String SVG = ".svg";
-
-        // Audio Files
-        String MP3 = ".mp3";
-        String WAV = ".wav";
-        String FLAC = ".flac";
-
-        // Video Files
-        String MP4 = ".mp4";
-        String AVI = ".avi";
-        String MKV = ".mkv";
-
-        // Executable Files
-        String EXE = ".exe";
-        String APP = ".app";
-        String SH = ".sh";
-
-        // Archive Files
-        String ZIP = ".zip";
-        String TAR = ".tar";
-        String GZ = ".gz";
-        String TAR_GZ = ".tar.gz";
-
-        // Database Files
-        String DB = ".db";
-        String SQLITE = ".sqlite";
-        String SQL = ".sql";
-
-        // Programming Files
-        String JAVA = ".java";
-        String PY = ".py";
-        String HTML = ".html";
-        String CSS = ".css";
-        String JS = ".js";
-
-        // Configuration Files
-        String INI = ".ini";
-        String PROPERTIES = ".properties";
-        String YAML = ".yaml";
-        String YML = ".yml";
+    static class Unit {
+        public static final String BYTES = "B";
+        public static final String KILOBYTES = "KB";
+        public static final String MEGABYTES = "MB";
+        public static final String GIGABYTES = "GB";
+        public static final String TOO_LARGE = "Too large to display";
     }
 
     /**
@@ -396,6 +311,9 @@ public class FileUtils {
         return file;
     }
 
-    //====================================== 02 Jan 2024 released ==========================================================================
+    //====================================== 03 Jan 2024 released ==========================================================================
+
+
+
 
 }

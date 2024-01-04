@@ -1,7 +1,5 @@
-package com.rse.webservice.locket.payload.freshtoken.responses;
+package com.rse.webservice.locket.payload.token.responses;
 
-import jakarta.persistence.Column;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,7 +7,7 @@ import java.sql.Timestamp;
 
 @Data
 @Builder
-public class RefreshTokenSelfResponse {
+public class TokenSelfResponse {
     private String accessToken;
 
     private String type;

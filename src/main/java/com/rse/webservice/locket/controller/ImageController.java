@@ -1,5 +1,6 @@
 package com.rse.webservice.locket.controller;
 
+import com.rse.webservice.locket.constants.HttpStatusCodes;
 import com.rse.webservice.locket.payload.ApiResponse;
 import com.rse.webservice.locket.payload.image.requests.*;
 import com.rse.webservice.locket.service.ImageService;
@@ -58,7 +59,7 @@ public class ImageController {
         var request = ImageUploadRequest.of(file);
         var response = imageService.upload(request);
 
-        return new ApiResponse<>(response);
+        return new ApiResponse<>(response, HttpStatusCodes.CREATED);
     }
 
     @DeleteMapping("/{id}")

@@ -1,4 +1,4 @@
-package com.rse.webservice.locket.service.common;
+package com.rse.webservice.locket.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 

@@ -1,9 +1,7 @@
 package com.rse.webservice.locket.model;
 
-import com.rse.webservice.locket.constants.Const;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.rse.webservice.locket.enums.MediaState;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Objects;
@@ -23,7 +21,8 @@ public class Post extends AbstractAudit {
     private String content;
 
     @Column(name = "state")
-    private Integer state = Const.GeneralState.PUBLIC;
+    @Enumerated(EnumType.STRING)
+    private MediaState state = MediaState.PUBLIC;
 
     @Column(name = "view_count")
     private Integer viewCount = 0;
@@ -35,8 +34,6 @@ public class Post extends AbstractAudit {
     public Boolean isEdit() {
         return Objects.nonNull(super.getUpdatedAt());
     }
-
-
 
 
 }
