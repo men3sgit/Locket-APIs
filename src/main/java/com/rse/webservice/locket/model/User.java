@@ -1,8 +1,10 @@
 package com.rse.webservice.locket.model;
 
 import com.rse.webservice.locket.constants.Const;
-import com.rse.webservice.locket.constants.Role;
-import jakarta.persistence.*;
+import com.rse.webservice.locket.enums.Role;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,7 +32,7 @@ public class User extends AbstractAudit implements UserDetails {
 
     public User() {
         this.locked = Boolean.FALSE;
-        this.roles = Role.DEFAULT_ROLE;
+        this.roles = Role.ROLE_USER.name();
         setStatus(Const.GeneralStatus.INACTIVE);
     }
 

@@ -1,7 +1,7 @@
 package com.rse.webservice.locket.payload;
 
-import com.rse.webservice.locket.constants.HttpStatusCode;
 import com.rse.webservice.locket.constants.ConstantKey;
+import com.rse.webservice.locket.constants.HttpStatusCodes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,10 +22,15 @@ public class ApiResponse<T> {
 
     public ApiResponse(T data) {
         this.data = data;
-        this.code = HttpStatusCode.OK;
+        this.code = HttpStatusCodes.OK;
         this.message = ConstantKey.MSG_SUCCESS;
         this.instant = Instant.now();
         this.url = getRequestUrl();
+    }
+
+    public ApiResponse(T data, int code) {
+        this(data);
+        this.code = code;
     }
 
     @Override

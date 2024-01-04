@@ -2,7 +2,6 @@ package com.rse.webservice.locket.service.impl;
 
 import com.rse.webservice.locket.config.storage.StorageService;
 import com.rse.webservice.locket.constants.Const;
-import com.rse.webservice.locket.constants.URL;
 import com.rse.webservice.locket.exception.ApiRequestException;
 import com.rse.webservice.locket.model.File;
 import com.rse.webservice.locket.payload.file.requests.*;
@@ -12,6 +11,7 @@ import com.rse.webservice.locket.service.FileService;
 import com.rse.webservice.locket.utils.DataUtils;
 import com.rse.webservice.locket.utils.FileUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,7 +20,9 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Service
 public class FileServiceImpl implements FileService {
-    private static final String STORED_FILE_PATH = URL.DOMAIN + "/api/v1/files/";
+    @Value("${url.domain}")
+    private String domain;
+    private static final String STORED_FILE_PATH = "/api/v1/files/";
     private final FileRepository fileRepository;
     private final StorageService storageService;
 
@@ -48,7 +50,7 @@ public class FileServiceImpl implements FileService {
 
         return File.builder()
                 .name(fileName)
-                .path(STORED_FILE_PATH)
+                .path(domain + STORED_FILE_PATH)
                 .size(multipartFile.getSize())
                 .type(typeAndExtension[0])
                 .extension(typeAndExtension[1])

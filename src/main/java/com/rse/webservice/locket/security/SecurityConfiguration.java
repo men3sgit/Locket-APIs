@@ -45,6 +45,7 @@ public class SecurityConfiguration {
     public static final String[] IGNORED_PATH = new String[]{
             "/api/v*/auth/register",
             "/api/v*/auth/login",
+            "/api/v*/auth/verify**",
             "/api/v*/verify/**",
             "/",
             "/api/v1/refresh-token/self",

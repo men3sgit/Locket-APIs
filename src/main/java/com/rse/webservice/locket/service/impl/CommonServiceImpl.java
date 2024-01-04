@@ -1,8 +1,8 @@
-package com.rse.webservice.locket.service.common.impl;
+package com.rse.webservice.locket.service.impl;
 
 import com.rse.webservice.locket.model.User;
 import com.rse.webservice.locket.repository.UserRepository;
-import com.rse.webservice.locket.service.common.CommonService;
+import com.rse.webservice.locket.service.CommonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

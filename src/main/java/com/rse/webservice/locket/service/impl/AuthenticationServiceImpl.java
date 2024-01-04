@@ -3,20 +3,16 @@ package com.rse.webservice.locket.service.impl;
 import com.rse.webservice.locket.constants.ConstantKey;
 import com.rse.webservice.locket.exception.ApiRequestException;
 import com.rse.webservice.locket.model.User;
-import com.rse.webservice.locket.model.VerificationToken;
 import com.rse.webservice.locket.payload.account.requests.AccountCreateRequest;
 import com.rse.webservice.locket.payload.auth.requests.AuthenticationRequest;
 import com.rse.webservice.locket.payload.auth.requests.RegistrationRequest;
 import com.rse.webservice.locket.payload.auth.responses.AuthenticationResponse;
+import com.rse.webservice.locket.payload.auth.responses.LogoutResponse;
 import com.rse.webservice.locket.payload.auth.responses.RegistrationResponse;
-import com.rse.webservice.locket.payload.freshtoken.requests.RefreshTokenCreateRequest;
+import com.rse.webservice.locket.payload.token.requests.TokenCreateRequest;
 import com.rse.webservice.locket.repository.UserRepository;
-import com.rse.webservice.locket.repository.VerificationTokenRepository;
-import com.rse.webservice.locket.security.jwt.impl.JwtServiceImpl;
-import com.rse.webservice.locket.service.AccountService;
-import com.rse.webservice.locket.service.AuthenticationService;
-import com.rse.webservice.locket.service.RefreshTokenService;
-import com.rse.webservice.locket.service.VerificationService;
+import com.rse.webservice.locket.security.jwt.JwtService;
+import com.rse.webservice.locket.service.*;
 import com.rse.webservice.locket.utils.DataUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,16 +24,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
-
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtServiceImpl jwtUtils;
+    private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
     private final AuthenticationManager authenticationManager;
-    private final VerificationTokenRepository verificationTokenRepository;
-    private final VerificationService verificationService;
-    private final RefreshTokenService refreshTokenService;
+    private final TokenService tokenService;
     private final AccountService accountService;
+    private final CommonService commonService;
 
 
     //TODO: Refactoring can use phone number or something else
@@ -52,18 +46,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userRepository.save(newUser);
         //create new account
-        var accountCreateRequest = AccountCreateRequest.builder()
-                .userId(newUser.getId())
-                .firstName(request.getName())
-                .phoneNumber(request.getPhone())
-                .build();
+        var accountCreateRequest = AccountCreateRequest.builder().userId(newUser.getId()).firstName(request.getName()).phoneNumber(request.getPhone()).build();
         accountService.create(accountCreateRequest);
 
         // create new token
-        var verificationToken = new VerificationToken(newUser.getId());
-        verificationTokenRepository.save(verificationToken);
-
-        verificationService.sendMailToVerify(request.getEmail(), request.getName(), verificationToken.getToken());
+        var tokenCreateResponse = tokenService.createRegistrationToken(TokenCreateRequest.of(newUser.getId()));
+        tokenService.sendMailToVerify(request.getEmail(), accountCreateRequest.getFirstName(), tokenCreateResponse.getToken());
 
         return RegistrationResponse.of(newUser.getId());
     }
@@ -75,15 +63,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             var authentication = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
             authenticationManager.authenticate(authentication);// check enable user or user locked
 
-            String token = jwtUtils.generateToken(userDetails);
+            String token = jwtService.generateToken(userDetails);
             Long userId = userRepository.findByUsername(userDetails.getUsername()).get().getId();
-            refreshTokenService.create(RefreshTokenCreateRequest.of(userId));
 
             return AuthenticationResponse.of(token);
         } catch (Exception e) {
             throw new ApiRequestException(e.getMessage());
         }
 
+    }
+
+    @Override
+    public LogoutResponse logout() {
+        var loginUsername = commonService.getLoginUsername();
+
+        return null;
     }
 
 

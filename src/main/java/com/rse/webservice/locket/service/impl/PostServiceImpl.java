@@ -11,7 +11,7 @@ import com.rse.webservice.locket.payload.post.responses.PostUpdateResponse;
 import com.rse.webservice.locket.repository.PostRepository;
 import com.rse.webservice.locket.service.AccountService;
 import com.rse.webservice.locket.service.PostService;
-import com.rse.webservice.locket.service.common.CommonService;
+import com.rse.webservice.locket.service.CommonService;
 import com.rse.webservice.locket.utils.DataUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

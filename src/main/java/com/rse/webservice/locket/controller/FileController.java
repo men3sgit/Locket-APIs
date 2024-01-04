@@ -1,11 +1,13 @@
 package com.rse.webservice.locket.controller;
 
+import com.rse.webservice.locket.constants.HttpStatusCodes;
 import com.rse.webservice.locket.payload.ApiResponse;
 import com.rse.webservice.locket.payload.file.requests.*;
 import com.rse.webservice.locket.service.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,7 +48,7 @@ public class FileController {
                 .build();
         var response = fileService.upload(request);
 
-        return new ApiResponse<>(response);
+        return new ApiResponse<>(response, HttpStatusCodes.CREATED);
     }
 
     @GetMapping("/{id}")
