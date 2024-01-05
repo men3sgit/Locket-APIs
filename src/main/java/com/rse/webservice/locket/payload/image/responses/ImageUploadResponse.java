@@ -7,4 +7,5 @@ import lombok.Data;
 @AllArgsConstructor(staticName = "of")
 public class ImageUploadResponse {
     private Long id;
+    private String path;
 }

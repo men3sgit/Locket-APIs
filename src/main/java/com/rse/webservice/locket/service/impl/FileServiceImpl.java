@@ -31,7 +31,7 @@ public class FileServiceImpl implements FileService {
         var multipartFile = request.getFile();
         var newFile = createFileEntity(multipartFile);
         fileRepository.save(newFile);
-        return FileUploadResponse.of(newFile.getId());
+        return FileUploadResponse.of(newFile.getId(), newFile.getPath());
     }
 
     @Override

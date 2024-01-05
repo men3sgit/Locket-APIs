@@ -2,6 +2,7 @@ package com.rse.webservice.locket.service;
 
 import com.rse.webservice.locket.payload.image.requests.*;
 import com.rse.webservice.locket.payload.image.responses.*;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ImageService {
     ImageUpdateResponse update(ImageUpdateRequest request);
@@ -15,5 +16,6 @@ public interface ImageService {
     ImageSelfResponse self(ImageSelfRequest request);
 
     ImageSearchResponse search(ImageSearchRequest request);
+
 
 }
