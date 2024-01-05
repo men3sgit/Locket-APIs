@@ -38,15 +38,22 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public RegistrationResponse addNewUser(RegistrationRequest request) {
         // create new user
-        if (userRepository.findByUsername(request.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new ApiRequestException(ConstantKey.MSG_EMAIL_TAKEN);
         }
         var newUser = DataUtils.copyProperties(request, User.class);
-        newUser.setUsername(request.getEmail());
+        newUser.setEmail(request.getEmail());
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userRepository.save(newUser);
         //create new account
-        var accountCreateRequest = AccountCreateRequest.builder().userId(newUser.getId()).firstName(request.getName()).phoneNumber(request.getPhone()).build();
+        String appName = request.getFirstName().substring(request.getEmail().indexOf('@'));
+        var accountCreateRequest = AccountCreateRequest.builder()
+                .userId(newUser.getId())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .appName(appName)
+                .phoneNumber(request.getPhoneNumber())
+                .build();
         accountService.create(accountCreateRequest);
 
         // create new token
@@ -64,7 +71,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             authenticationManager.authenticate(authentication);// check enable user or user locked
 
             String token = jwtService.generateToken(userDetails);
-            Long userId = userRepository.findByUsername(userDetails.getUsername()).get().getId();
+            Long userId = userRepository.findByEmail(userDetails.getUsername()).get().getId();
 
             return AuthenticationResponse.of(token);
         } catch (Exception e) {

@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 @Entity
 @Data
 public class User extends AbstractAudit implements UserDetails {
-    @Column(name = "username", unique = true)
-    private String username;
+    @Column(name = "email", unique = true)
+    private String email;
 
     @Column(name = "password")
     private String password;
@@ -45,7 +45,7 @@ public class User extends AbstractAudit implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.email;
     }
 
     @Override

@@ -1,5 +1,5 @@
 package com.rse.webservice.locket.constants;
-
+@Deprecated
 public class Const {
     public interface GeneralStatus {
         int INACTIVE = 0;
