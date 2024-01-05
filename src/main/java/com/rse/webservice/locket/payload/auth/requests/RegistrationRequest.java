@@ -22,7 +22,7 @@ public class RegistrationRequest {
     private String firstName;
     private String lastName;
 
-    @NotEmpty(message = "Phone number cannot be empty")
-    @Pattern(regexp = "^[0-9]+$", message = "Phone number must contain only digits")
+//    @NotEmpty(message = "Phone number cannot be empty")
+//    @Pattern(regexp = "^[0-9]+$", message = "Phone number must contain only digits")
     private String phoneNumber;
 }
