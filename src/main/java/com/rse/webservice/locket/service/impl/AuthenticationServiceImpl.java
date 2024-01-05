@@ -41,12 +41,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new ApiRequestException(ConstantKey.MSG_EMAIL_TAKEN);
         }
+        // create new user
         var newUser = DataUtils.copyProperties(request, User.class);
         newUser.setEmail(request.getEmail());
         newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userRepository.save(newUser);
+
         //create new account
-        String appName = request.getFirstName().substring(request.getEmail().indexOf('@'));
+        String appName = request.getEmail().substring(request.getEmail().indexOf('@'));
         var accountCreateRequest = AccountCreateRequest.builder()
                 .userId(newUser.getId())
                 .firstName(request.getFirstName())

@@ -20,6 +20,13 @@ public class ImageController {
 
     private final ImageService imageService;
 
+    @GetMapping("/hello")
+    public ResponseEntity<?> hello() {
+
+        return ResponseEntity.ok()
+                .body("Helloww");
+    }
+
     @GetMapping("/{id}/download")
     public ResponseEntity<ByteArrayResource> downloadById(@PathVariable Long id) {
         var request = ImageDownloadRequest.of(id);

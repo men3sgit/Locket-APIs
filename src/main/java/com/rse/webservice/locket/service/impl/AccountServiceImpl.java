@@ -1,5 +1,6 @@
 package com.rse.webservice.locket.service.impl;
 
+import com.rse.webservice.locket.exception.ApiRequestException;
 import com.rse.webservice.locket.model.Account;
 import com.rse.webservice.locket.payload.account.requests.*;
 import com.rse.webservice.locket.payload.account.responses.*;
@@ -16,8 +17,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountCreateResponse create(AccountCreateRequest request) {
         var newAccount = DataUtils.copyProperties(request, Account.class);
-        var id = accountRepository.save(newAccount).getId();
-        return AccountCreateResponse.of(id);
+        accountRepository.save(newAccount);
+        return AccountCreateResponse.of(newAccount.getId());
     }
 
     @Override
@@ -37,7 +38,10 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountSelfResponse self(AccountSelfRequest request) {
-
-        return null;
+        var storedAccount = getAccount(request.getId());
+        return DataUtils.copyProperties(storedAccount, AccountSelfResponse.class);
+    }
+    public Account getAccount(Long userId){
+        return accountRepository.findByUserId(userId).orElseThrow(() -> new ApiRequestException(""));
     }
 }
