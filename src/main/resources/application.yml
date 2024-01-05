@@ -70,12 +70,16 @@ locket:
     jwt:
       secretKey: c3ckfrhaKW8Mplm9ylgQCsMLoFmsip/ouP1u51eWRLRtCgDA6OFoLH+azJtNEDUYODPqhm/Kms2jYJdaIczcrap9vBVrbd7qMk1AuoNJjZg=
       expiration-time-ms: 86400000 # 30 minutes
-      refresh-token:
+    token:
+      refresh:
         expiration-time-ms: 86400000 # a day
+      registration:
+        expiration-time-ms: 900000 # 15 minutes
+
 
     storage:
       bucket:
-        name: locket-bucket
+        name: locket-bucket/file-upload
 
 
 # S3
@@ -88,6 +92,17 @@ cloud:
       static: ap-southeast-1
     stack:
       auto: false
+
+
+
+
+
+
+url:
+  domain: http://localhost:${server.port}
+  endpoint:
+    verify:
+      registration: ${url.domain}/api/v1/auth/verify-registration
 
 
 

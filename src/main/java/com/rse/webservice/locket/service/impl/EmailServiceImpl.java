@@ -1,8 +1,7 @@
 package com.rse.webservice.locket.service.impl;
 
-import com.rse.webservice.locket.utils.EmailUtils;
-import com.rse.webservice.locket.utils.templates.TemplateConfig;
 import com.rse.webservice.locket.service.EmailService;
+import com.rse.webservice.locket.utils.templates.TemplateConfig;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;

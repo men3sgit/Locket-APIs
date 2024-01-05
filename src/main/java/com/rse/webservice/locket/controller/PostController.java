@@ -1,6 +1,7 @@
 package com.rse.webservice.locket.controller;
 
 
+import com.rse.webservice.locket.constants.HttpStatusCodes;
 import com.rse.webservice.locket.payload.post.requests.*;
 import com.rse.webservice.locket.payload.ApiResponse;
 import com.rse.webservice.locket.service.PostService;
@@ -16,7 +17,7 @@ public class PostController {
     @PostMapping
     public ApiResponse<?> create(PostCreateRequest request) {
         var response = postService.create(request);
-        return new ApiResponse<>(response);
+        return new ApiResponse<>(response, HttpStatusCodes.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -37,9 +38,8 @@ public class PostController {
         return new ApiResponse<>(response);
     }
 
-    @PutMapping("/{id}")
-    public ApiResponse<?> update(@PathVariable Long id, PostUpdateRequest request) {
-        request.setId(id);
+    @PutMapping
+    public ApiResponse<?> update(PostUpdateRequest request) {
         var response = postService.update(request);
         return new ApiResponse<>(response);
     }

@@ -12,6 +12,8 @@ import java.time.LocalDate;
 public class Account extends AbstractAudit {
     private Long userId;
 
+    private String appName;
+
     private String avatarPath;
 
     private String firstName;

@@ -14,7 +14,10 @@ public class FileSelfResponse {
 
     private String formattedSize;
 
+    private String type;
+
     private String extension;
 
     private Timestamp createdAt;
+
 }

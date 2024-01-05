@@ -1,6 +1,7 @@
 package com.rse.webservice.locket.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.PostPersist;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,5 +23,12 @@ public class File extends AbstractAudit {
     private Long size;
 
     private String extension;
+
+    private String type;
+
+    @PostPersist
+    public void setPath() {
+        this.setPath(path + this.getId());
+    }
 
 }
