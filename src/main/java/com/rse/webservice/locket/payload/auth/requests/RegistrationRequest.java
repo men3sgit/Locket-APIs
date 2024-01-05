@@ -19,9 +19,10 @@ public class RegistrationRequest {
     private String password;
 
     @NotEmpty(message = "Name cannot be empty")
-    private String name;
+    private String firstName;
+    private String lastName;
 
     @NotEmpty(message = "Phone number cannot be empty")
     @Pattern(regexp = "^[0-9]+$", message = "Phone number must contain only digits")
-    private String phone;
+    private String phoneNumber;
 }

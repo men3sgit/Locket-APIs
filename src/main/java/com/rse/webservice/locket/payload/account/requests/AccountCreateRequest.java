@@ -12,6 +12,8 @@ public class AccountCreateRequest {
 
     private String avatarPath;
 
+    private String appName;
+
     private String firstName;
 
     private String lastName;
