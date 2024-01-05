@@ -48,7 +48,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         userRepository.save(newUser);
 
         //create new account
-        String appName = request.getEmail().substring(request.getEmail().indexOf('@'));
+        String appName = request.getEmail().substring(0,request.getEmail().indexOf('@'));
         var accountCreateRequest = AccountCreateRequest.builder()
                 .userId(newUser.getId())
                 .firstName(request.getFirstName())

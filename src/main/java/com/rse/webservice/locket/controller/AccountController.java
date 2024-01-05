@@ -29,9 +29,9 @@ public class AccountController {
         return new ApiResponse<>(response);
     }
 
-    @PutMapping("/{id}")
-    public ApiResponse<?> update(@PathVariable Long id, AccountUpdateRequest request) {
-        request.setId(id);
+    @PutMapping
+    public ApiResponse<?> update(AccountUpdateRequest request) {
+        request.setUserId(commonService.getLoginId());
         var response = accountService.update(request);
         return new ApiResponse<>(response);
     }

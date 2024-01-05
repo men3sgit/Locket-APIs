@@ -47,7 +47,7 @@ public class ImageServiceImpl implements ImageService {
         updateImageProperties(newImage, multipartFile);
         imageRepository.save(newImage);
 
-        return ImageUploadResponse.of(newImage.getId());
+        return ImageUploadResponse.of(newImage.getId(), fileUploadResponse.getPath());
     }
 
     private void updateImageProperties(Image image, MultipartFile multipartFile) {

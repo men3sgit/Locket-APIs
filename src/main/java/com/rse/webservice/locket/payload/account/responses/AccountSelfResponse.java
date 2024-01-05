@@ -23,5 +23,7 @@ public class AccountSelfResponse {
 
     private String phoneNumber;
 
+    private String bio;
+
     private int age;
 }
