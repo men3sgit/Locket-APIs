@@ -26,6 +26,8 @@ public class Account extends AbstractAudit {
 
     private String phoneNumber;
 
+    private String bio;
+
     private transient int age;
 
 
