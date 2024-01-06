@@ -2,11 +2,9 @@ package com.rse.webservice.locket.service;
 
 import com.rse.webservice.locket.payload.auth.requests.AuthenticationRequest;
 import com.rse.webservice.locket.payload.auth.requests.ChangePasswordRequest;
+import com.rse.webservice.locket.payload.auth.requests.ForgotPasswordRequest;
 import com.rse.webservice.locket.payload.auth.requests.RegistrationRequest;
-import com.rse.webservice.locket.payload.auth.responses.AuthenticationResponse;
-import com.rse.webservice.locket.payload.auth.responses.ChangePasswordResponse;
-import com.rse.webservice.locket.payload.auth.responses.LogoutResponse;
-import com.rse.webservice.locket.payload.auth.responses.RegistrationResponse;
+import com.rse.webservice.locket.payload.auth.responses.*;
 
 public interface AuthenticationService {
     RegistrationResponse addNewUser(RegistrationRequest request);
@@ -18,5 +16,5 @@ public interface AuthenticationService {
     ChangePasswordResponse changePassword(ChangePasswordRequest request);
 
 
-
+    ForgotPasswordResponse resetPassword(ForgotPasswordRequest request);
 }

@@ -8,8 +8,13 @@ import com.rse.webservice.locket.payload.token.responses.TokenUpdateResponse;
 public interface TokenService {
 
     TokenUpdateResponse verifyNewUser(TokenUpdateRequest request);
+    TokenUpdateResponse receiveNewPassword(TokenUpdateRequest request);
 
     void sendMailToVerify(String to, String name, String token);
 
+    void sendMailToResetPassword(String to);
+
     TokenCreateResponse createRegistrationToken(TokenCreateRequest request);
+
+
 }

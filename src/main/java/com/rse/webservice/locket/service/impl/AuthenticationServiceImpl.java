@@ -6,11 +6,9 @@ import com.rse.webservice.locket.model.User;
 import com.rse.webservice.locket.payload.account.requests.AccountCreateRequest;
 import com.rse.webservice.locket.payload.auth.requests.AuthenticationRequest;
 import com.rse.webservice.locket.payload.auth.requests.ChangePasswordRequest;
+import com.rse.webservice.locket.payload.auth.requests.ForgotPasswordRequest;
 import com.rse.webservice.locket.payload.auth.requests.RegistrationRequest;
-import com.rse.webservice.locket.payload.auth.responses.AuthenticationResponse;
-import com.rse.webservice.locket.payload.auth.responses.ChangePasswordResponse;
-import com.rse.webservice.locket.payload.auth.responses.LogoutResponse;
-import com.rse.webservice.locket.payload.auth.responses.RegistrationResponse;
+import com.rse.webservice.locket.payload.auth.responses.*;
 import com.rse.webservice.locket.payload.token.requests.TokenCreateRequest;
 import com.rse.webservice.locket.repository.UserRepository;
 import com.rse.webservice.locket.security.jwt.JwtService;
@@ -105,6 +103,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         storedUser.setPassword(passwordEncoder.encode(request.getNewPassword()));
         userRepository.save(storedUser);
         return ChangePasswordResponse.of(Boolean.TRUE);
+    }
+
+    @Override
+    public ForgotPasswordResponse resetPassword(ForgotPasswordRequest request) {
+        tokenService.sendMailToResetPassword(request.getEmail());
+
+        return ForgotPasswordResponse.of("Please check your email");
     }
 
     private User getUserByEmail(String email) {

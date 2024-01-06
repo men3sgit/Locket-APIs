@@ -73,8 +73,14 @@ locket:
     token:
       refresh:
         expiration-time-ms: 86400000 # a day
+
       registration:
         expiration-time-ms: 900000 # 15 minutes
+        verify-endpoint: ${url.domain}/api/v1/auth/verify-registration
+
+      forgot-password:
+        expiration-time-ms: 1800000 # 30 minutes
+        verify-endpoint: ${url.domain}/api/v1/auth/verify-forgot-password
 
 
     storage:
@@ -101,8 +107,7 @@ cloud:
 url:
   domain: http://localhost:${server.port}
   endpoint:
-    verify:
-      registration: ${url.domain}/api/v1/auth/verify-registration
+
 
 
 

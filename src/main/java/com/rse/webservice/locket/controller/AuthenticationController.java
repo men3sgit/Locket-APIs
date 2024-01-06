@@ -4,6 +4,7 @@ import com.rse.webservice.locket.constants.HttpStatusCodes;
 import com.rse.webservice.locket.payload.ApiResponse;
 import com.rse.webservice.locket.payload.auth.requests.AuthenticationRequest;
 import com.rse.webservice.locket.payload.auth.requests.ChangePasswordRequest;
+import com.rse.webservice.locket.payload.auth.requests.ForgotPasswordRequest;
 import com.rse.webservice.locket.payload.auth.requests.RegistrationRequest;
 import com.rse.webservice.locket.payload.token.requests.TokenUpdateRequest;
 import com.rse.webservice.locket.service.AuthenticationService;
@@ -40,6 +41,17 @@ public class AuthenticationController {
     @PostMapping(path = "/confirm-password")
     public ApiResponse<?> confirmPassword(@RequestBody AuthenticationRequest request) {
         return new ApiResponse<>(authenticationService.authenticate(request));
+    }
+
+    @GetMapping(path = "/forgot-password")
+    public ApiResponse<?> forgotPassword(@RequestBody ForgotPasswordRequest request) {
+        return new ApiResponse<>(authenticationService.resetPassword(request));
+    }
+
+    @GetMapping(path = "/verify-forgot-password")
+    public ApiResponse<?> receiveNewPassword(TokenUpdateRequest request) {
+        var response = tokenService.receiveNewPassword(request);
+        return new ApiResponse<>("Your new password: " + response.getMessage(),HttpStatusCodes.NO_CONTENT);
     }
 
     @GetMapping("/verify-registration")
