@@ -4,6 +4,7 @@ import com.rse.webservice.locket.enums.MediaState;
 import com.rse.webservice.locket.exception.ApiRequestException;
 import com.rse.webservice.locket.model.Post;
 import com.rse.webservice.locket.payload.account.requests.AccountSelfRequest;
+import com.rse.webservice.locket.payload.image.requests.ImageUploadRequest;
 import com.rse.webservice.locket.payload.post.requests.*;
 import com.rse.webservice.locket.payload.post.responses.PostCreateResponse;
 import com.rse.webservice.locket.payload.post.responses.PostSearchResponse;
@@ -11,6 +12,7 @@ import com.rse.webservice.locket.payload.post.responses.PostSelfResponse;
 import com.rse.webservice.locket.payload.post.responses.PostUpdateResponse;
 import com.rse.webservice.locket.repository.PostRepository;
 import com.rse.webservice.locket.service.AccountService;
+import com.rse.webservice.locket.service.ImageService;
 import com.rse.webservice.locket.service.PostService;
 import com.rse.webservice.locket.service.CommonService;
 import com.rse.webservice.locket.utils.DataUtils;
@@ -23,11 +25,14 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final CommonService commonService;
     private final AccountService accountService;
+    private final ImageService imageService;
 
 
     @Override
     public PostCreateResponse create(PostCreateRequest request) {
         var newPost = DataUtils.copyProperties(request, Post.class);
+        var uploadResponse = imageService.upload(ImageUploadRequest.of(request.getMultipartFile()));
+        newPost.setImagePath(uploadResponse.getPath());
         newPost.setMediaState(MediaState.fromString(request.getMediaState()));
         newPost.setUserId(commonService.getLoginId());
         postRepository.save(newPost);
