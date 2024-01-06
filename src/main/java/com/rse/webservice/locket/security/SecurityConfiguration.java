@@ -51,7 +51,9 @@ public class SecurityConfiguration {
             "/api/v1/refresh-token/self",
             "/api/v1/files/**",
             "/api/v1/images/**",
-            "/api/v1/accounts**"
+            "/api/v1/accounts**",
+            "/api/v1/auth/forgot-password",
+            "/api/v1/auth/verify-forgot-password**"
     };
 
 }
