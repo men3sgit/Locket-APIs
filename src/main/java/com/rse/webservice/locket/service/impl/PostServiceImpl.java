@@ -1,5 +1,6 @@
 package com.rse.webservice.locket.service.impl;
 
+import com.rse.webservice.locket.enums.MediaState;
 import com.rse.webservice.locket.exception.ApiRequestException;
 import com.rse.webservice.locket.model.Post;
 import com.rse.webservice.locket.payload.account.requests.AccountSelfRequest;
@@ -27,7 +28,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostCreateResponse create(PostCreateRequest request) {
         var newPost = DataUtils.copyProperties(request, Post.class);
-
+        newPost.setMediaState(MediaState.fromString(request.getMediaState()));
         newPost.setUserId(commonService.getLoginId());
         postRepository.save(newPost);
         return PostCreateResponse.of(newPost.getId());

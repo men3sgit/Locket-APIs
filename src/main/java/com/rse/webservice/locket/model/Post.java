@@ -20,9 +20,9 @@ public class Post extends AbstractAudit {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "state")
+    @Column(name = "media_state")
     @Enumerated(EnumType.STRING)
-    private MediaState state = MediaState.PUBLIC;
+    private MediaState mediaState = MediaState.PUBLIC;
 
     @Column(name = "view_count")
     private Integer viewCount = 0;
