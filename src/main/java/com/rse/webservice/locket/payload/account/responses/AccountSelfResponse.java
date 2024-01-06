@@ -9,6 +9,8 @@ public class AccountSelfResponse {
 
     private Long userId;
 
+    private String email;
+
     private String avatarPath;
 
     private String appName;
