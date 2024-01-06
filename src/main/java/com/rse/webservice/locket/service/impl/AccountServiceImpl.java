@@ -8,6 +8,7 @@ import com.rse.webservice.locket.payload.image.requests.ImageUpdateRequest;
 import com.rse.webservice.locket.payload.image.requests.ImageUploadRequest;
 import com.rse.webservice.locket.repository.AccountRepository;
 import com.rse.webservice.locket.service.AccountService;
+import com.rse.webservice.locket.service.CommonService;
 import com.rse.webservice.locket.service.ImageService;
 import com.rse.webservice.locket.utils.DataUtils;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.Objects;
 public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
     private final ImageService imageService;
+    private final CommonService commonService;
 
     @Override
     public AccountCreateResponse create(AccountCreateRequest request) {
@@ -32,23 +34,42 @@ public class AccountServiceImpl implements AccountService {
     public AccountUpdateResponse update(AccountUpdateRequest request) {
         var storedAccount = getAccount(request.getUserId());
         var updateAccount = DataUtils.copyProperties(request, Account.class);
-        String storedAvatarPath = storedAccount.getAvatarPath();
-        if (Objects.isNull(storedAvatarPath)) {
-            var uploadResponse = imageService.upload(ImageUploadRequest.of(request.getAvatar()));
-            // formatted code
-            String avatarPath = uploadResponse.getPath().replace("/api/v1/files/", "/api/v1/images/");
-            updateAccount.setAvatarPath(avatarPath);
-        } else {
-            String fileIdStr = storedAvatarPath.substring(storedAvatarPath.lastIndexOf("/") + 1);
-            var updateImageRequest = ImageUpdateRequest.of(Long.parseLong(fileIdStr), request.getAvatar());
-            imageService.update(updateImageRequest);
-            updateAccount.setAvatarPath(storedAvatarPath);
+
+        if (Objects.isNull(request.getAvatar()) || request.getAvatar().isEmpty()) {
+            clearAvatarPath(storedAccount);
+            return AccountUpdateResponse.of(storedAccount.getId());
         }
 
-
-        updateAccount.setId(storedAccount.getId());
+        handleAvatarUpdate(request, storedAccount, updateAccount);
         accountRepository.save(updateAccount);
         return AccountUpdateResponse.of(storedAccount.getId());
+    }
+
+    private void handleAvatarUpdate(AccountUpdateRequest request, Account storedAccount, Account updateAccount) {
+        String storedAvatarPath = storedAccount.getAvatarPath();
+
+        if (Objects.isNull(storedAvatarPath)) {
+            handleNewAvatar(request, updateAccount);
+        } else {
+            handleExistingAvatar(request, storedAccount, updateAccount);
+        }
+    }
+
+    private void handleNewAvatar(AccountUpdateRequest request, Account updateAccount) {
+        var uploadResponse = imageService.upload(ImageUploadRequest.of(request.getAvatar()));
+        String avatarPath = uploadResponse.getPath().replace("/api/v1/files/", "/api/v1/images/");
+        updateAccount.setAvatarPath(avatarPath);
+    }
+
+    private void handleExistingAvatar(AccountUpdateRequest request, Account storedAccount, Account updateAccount) {
+        String fileIdStr = storedAccount.getAvatarPath().substring(storedAccount.getAvatarPath().lastIndexOf("/") + 1);
+        var updateImageRequest = ImageUpdateRequest.of(Long.parseLong(fileIdStr), request.getAvatar());
+        imageService.update(updateImageRequest);
+        updateAccount.setAvatarPath(storedAccount.getAvatarPath());
+    }
+
+    private void clearAvatarPath(Account storedAccount) {
+        storedAccount.setAvatarPath(null);
     }
 
     @Override
@@ -64,7 +85,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountSelfResponse self(AccountSelfRequest request) {
         var storedAccount = getAccount(request.getUserId());
-        return DataUtils.copyProperties(storedAccount, AccountSelfResponse.class);
+        var accountResponse = DataUtils.copyProperties(storedAccount, AccountSelfResponse.class);
+        var currentEmail = commonService.getLoginUsername();
+        accountResponse.setEmail(currentEmail);
+        return accountResponse;
     }
 
     public Account getAccount(Long userId) {

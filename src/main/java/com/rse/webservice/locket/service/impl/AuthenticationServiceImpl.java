@@ -5,8 +5,10 @@ import com.rse.webservice.locket.exception.ApiRequestException;
 import com.rse.webservice.locket.model.User;
 import com.rse.webservice.locket.payload.account.requests.AccountCreateRequest;
 import com.rse.webservice.locket.payload.auth.requests.AuthenticationRequest;
+import com.rse.webservice.locket.payload.auth.requests.ChangePasswordRequest;
 import com.rse.webservice.locket.payload.auth.requests.RegistrationRequest;
 import com.rse.webservice.locket.payload.auth.responses.AuthenticationResponse;
+import com.rse.webservice.locket.payload.auth.responses.ChangePasswordResponse;
 import com.rse.webservice.locket.payload.auth.responses.LogoutResponse;
 import com.rse.webservice.locket.payload.auth.responses.RegistrationResponse;
 import com.rse.webservice.locket.payload.token.requests.TokenCreateRequest;
@@ -17,6 +19,7 @@ import com.rse.webservice.locket.utils.DataUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -48,7 +51,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         userRepository.save(newUser);
 
         //create new account
-        String appName = request.getEmail().substring(0,request.getEmail().indexOf('@'));
+        String appName = request.getEmail().substring(0, request.getEmail().indexOf('@'));
         var accountCreateRequest = AccountCreateRequest.builder()
                 .userId(newUser.getId())
                 .firstName(request.getFirstName())
@@ -73,8 +76,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             authenticationManager.authenticate(authentication);// check enable user or user locked
 
             String token = jwtService.generateToken(userDetails);
-            Long userId = userRepository.findByEmail(userDetails.getUsername()).get().getId();
-
             return AuthenticationResponse.of(token);
         } catch (Exception e) {
             throw new ApiRequestException(e.getMessage());
@@ -87,6 +88,27 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var loginUsername = commonService.getLoginUsername();
 
         return null;
+    }
+
+    @Override
+    public ChangePasswordResponse changePassword(ChangePasswordRequest request) {
+        var currentLoginUsername = commonService.getLoginUsername();
+        var authentication = new UsernamePasswordAuthenticationToken(currentLoginUsername, request.getOldPassword());
+        try {
+            authenticationManager.authenticate(authentication);
+        } catch (AuthenticationException ex) {
+            // Handle authentication failure
+            throw new ApiRequestException("your old password incorrect!!!");
+        }
+
+        var storedUser = getUserByEmail(currentLoginUsername);
+        storedUser.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        userRepository.save(storedUser);
+        return ChangePasswordResponse.of(Boolean.TRUE);
+    }
+
+    private User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new ApiRequestException("User not found"));
     }
 
 

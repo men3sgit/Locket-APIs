@@ -1,9 +1,10 @@
 package com.rse.webservice.locket.controller;
 
 import com.rse.webservice.locket.constants.HttpStatusCodes;
-import com.rse.webservice.locket.payload.auth.requests.AuthenticationRequest;
-import com.rse.webservice.locket.payload.auth.requests.RegistrationRequest;
 import com.rse.webservice.locket.payload.ApiResponse;
+import com.rse.webservice.locket.payload.auth.requests.AuthenticationRequest;
+import com.rse.webservice.locket.payload.auth.requests.ChangePasswordRequest;
+import com.rse.webservice.locket.payload.auth.requests.RegistrationRequest;
 import com.rse.webservice.locket.payload.token.requests.TokenUpdateRequest;
 import com.rse.webservice.locket.service.AuthenticationService;
 import com.rse.webservice.locket.service.TokenService;
@@ -41,10 +42,16 @@ public class AuthenticationController {
         return new ApiResponse<>(authenticationService.authenticate(request));
     }
 
-    @GetMapping( "/verify-registration")
+    @GetMapping("/verify-registration")
     public ApiResponse<?> verify(TokenUpdateRequest request) {
         var response = tokenService.verifyNewUser(request);
         return new ApiResponse<>(response);
+    }
+
+    @PostMapping(path = "/change-password")
+    public ApiResponse<?> changePassword(@RequestBody ChangePasswordRequest request) {
+        var response = authenticationService.changePassword(request);
+        return new ApiResponse<>(response, HttpStatusCodes.NO_CONTENT);
     }
 
 
