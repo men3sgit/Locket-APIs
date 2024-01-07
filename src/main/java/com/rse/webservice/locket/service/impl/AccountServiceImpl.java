@@ -37,35 +37,39 @@ public class AccountServiceImpl implements AccountService {
 
         if (Objects.isNull(request.getAvatar()) || request.getAvatar().isEmpty()) {
             clearAvatarPath(storedAccount);
+            updateAccount.setId(storedAccount.getId());
             return AccountUpdateResponse.of(storedAccount.getId());
         }
 
+
         handleAvatarUpdate(request, storedAccount, updateAccount);
+        updateAccount.setId(storedAccount.getId());
         accountRepository.save(updateAccount);
         return AccountUpdateResponse.of(storedAccount.getId());
     }
 
     private void handleAvatarUpdate(AccountUpdateRequest request, Account storedAccount, Account updateAccount) {
         String storedAvatarPath = storedAccount.getAvatarPath();
+        updateAccount.setAvatarPath(storedAvatarPath);
 
         if (Objects.isNull(storedAvatarPath)) {
             handleNewAvatar(request, updateAccount);
         } else {
-            handleExistingAvatar(request, storedAccount, updateAccount);
+            handleExistingAvatar(request, storedAccount);
         }
     }
 
     private void handleNewAvatar(AccountUpdateRequest request, Account updateAccount) {
         var uploadResponse = imageService.upload(ImageUploadRequest.of(request.getAvatar()));
-        String avatarPath = uploadResponse.getPath().replace("/api/v1/files/", "/api/v1/images/");
+        String avatarPath = uploadResponse.getPath();
         updateAccount.setAvatarPath(avatarPath);
     }
 
-    private void handleExistingAvatar(AccountUpdateRequest request, Account storedAccount, Account updateAccount) {
-        String fileIdStr = storedAccount.getAvatarPath().substring(storedAccount.getAvatarPath().lastIndexOf("/") + 1);
-        var updateImageRequest = ImageUpdateRequest.of(Long.parseLong(fileIdStr), request.getAvatar());
+    private void handleExistingAvatar(AccountUpdateRequest request, Account storedAccount) {
+        String imageId = storedAccount.getAvatarPath().substring(storedAccount.getAvatarPath().lastIndexOf("/") + 1);
+        var updateImageRequest = ImageUpdateRequest.of(Long.parseLong(imageId), request.getAvatar());
         imageService.update(updateImageRequest);
-        updateAccount.setAvatarPath(storedAccount.getAvatarPath());
+
     }
 
     private void clearAvatarPath(Account storedAccount) {

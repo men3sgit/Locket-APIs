@@ -47,7 +47,9 @@ public class ImageServiceImpl implements ImageService {
         updateImageProperties(newImage, multipartFile);
         imageRepository.save(newImage);
 
-        return ImageUploadResponse.of(newImage.getId(), fileUploadResponse.getPath());
+        String formattedImagePath = fileUploadResponse.getPath().replace("/api/v1/files", "/api/v1/images");
+        formattedImagePath = formattedImagePath.substring(0, formattedImagePath.lastIndexOf('/') + 1) + newImage.getId();
+        return ImageUploadResponse.of(formattedImagePath);
     }
 
     private void updateImageProperties(Image image, MultipartFile multipartFile) {
@@ -75,7 +77,8 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public ImageDownloadResponse download(ImageDownloadRequest request) {
         var storedImage = getImage(request.getId());
-        var downloadedFile = fileService.download(FileDownloadRequest.of(storedImage.getFileId()));
+        var fileDownloadRequest = FileDownloadRequest.of(storedImage.getFileId());
+        var downloadedFile = fileService.download(fileDownloadRequest);
         return ImageDownloadResponse.of(downloadedFile.getContent(), downloadedFile.getName());
     }
 

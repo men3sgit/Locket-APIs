@@ -6,6 +6,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor(staticName = "of")
 public class ImageUploadResponse {
-    private Long id;
     private String path;
 }
