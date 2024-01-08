@@ -32,7 +32,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountUpdateResponse update(AccountUpdateRequest request) {
-        var storedAccount = getAccount(request.getUserId());
+        var storedAccount = getAccount(request.getAccountId());
         var updateAccount = DataUtils.copyProperties(request, Account.class);
 
         if (Objects.isNull(request.getAvatar()) || request.getAvatar().isEmpty()) {
@@ -88,14 +88,19 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountSelfResponse self(AccountSelfRequest request) {
-        var storedAccount = getAccount(request.getUserId());
+        var storedAccount = getAccount(request.getAccountId());
         var accountResponse = DataUtils.copyProperties(storedAccount, AccountSelfResponse.class);
         var currentEmail = commonService.getLoginUsername();
         accountResponse.setEmail(currentEmail);
         return accountResponse;
     }
 
-    public Account getAccount(Long userId) {
-        return accountRepository.findByUserId(userId).orElseThrow(() -> new ApiRequestException(""));
+    @Override
+    public Boolean existsAccount(Long accountId) {
+        return accountRepository.existsById(accountId);
+    }
+
+    public Account getAccount(Long accountId) {
+        return accountRepository.findByUserId(accountId).orElseThrow(() -> new ApiRequestException(""));
     }
 }

@@ -11,8 +11,8 @@ import java.util.Objects;
 @Table(name = "posts")
 public class Post extends AbstractAudit {
 
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "account_id")
+    private Long accountId;
 
     @Column(name = "image_path", nullable = false)
     private String imagePath;

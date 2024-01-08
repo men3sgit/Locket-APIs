@@ -53,7 +53,8 @@ public class SecurityConfiguration {
             "/api/v1/images/**",
             "/api/v1/accounts**",
             "/api/v1/auth/forgot-password",
-            "/api/v1/auth/verify-forgot-password**"
+            "/api/v1/auth/verify-forgot-password**",
+            "/api/v1/posts**"
     };
 
 }

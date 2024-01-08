@@ -7,12 +7,11 @@ import java.time.LocalDate;
 
 @Data
 public class AccountUpdateRequest {
-    private Long userId;
+    private Long accountId;
 
     private String bio;
 
     private String appName;
-
 
     private MultipartFile avatar;
 
