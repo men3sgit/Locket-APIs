@@ -13,4 +13,6 @@ public interface AccountService {
     AccountSearchResponse search(AccountSearchRequest request);
 
     AccountSelfResponse self(AccountSelfRequest request);
+
+    Boolean existsAccount(Long accountId);
 }

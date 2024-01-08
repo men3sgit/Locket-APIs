@@ -6,6 +6,8 @@ import com.rse.webservice.locket.payload.post.responses.PostSearchResponse;
 import com.rse.webservice.locket.payload.post.responses.PostSelfResponse;
 import com.rse.webservice.locket.payload.post.responses.PostUpdateResponse;
 
+import java.util.List;
+
 public interface PostService {
 
     PostCreateResponse create(PostCreateRequest request);
@@ -17,4 +19,6 @@ public interface PostService {
     PostSearchResponse search(PostSearchRequest request);
 
     PostUpdateResponse update(PostUpdateRequest request);
+
+    List<PostSelfResponse> getPostsByAccountId(Long accountId);
 }

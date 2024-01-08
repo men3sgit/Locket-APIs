@@ -19,6 +19,9 @@ import com.rse.webservice.locket.utils.DataUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Service
 public class PostServiceImpl implements PostService {
@@ -34,7 +37,7 @@ public class PostServiceImpl implements PostService {
         var uploadResponse = imageService.upload(ImageUploadRequest.of(request.getMultipartFile()));
         newPost.setImagePath(uploadResponse.getPath());
         newPost.setMediaState(MediaState.fromString(request.getMediaState()));
-        newPost.setUserId(commonService.getLoginId());
+        newPost.setAccountId(commonService.getCurrentAccountId());
         postRepository.save(newPost);
         return PostCreateResponse.of(newPost.getId());
     }
@@ -45,7 +48,7 @@ public class PostServiceImpl implements PostService {
         post.setViewCount(post.getViewCount() + 1);
         postRepository.save(post);
 
-        var account = accountService.self(AccountSelfRequest.of(post.getUserId()));
+        var account = accountService.self(AccountSelfRequest.of(post.getAccountId()));
         String author = account.getFirstName() + " " + account.getLastName();
         var response = DataUtils.copyProperties(post, PostSelfResponse.class);
         response.setAuthor(author);
@@ -66,6 +69,18 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostUpdateResponse update(PostUpdateRequest request) {
         return null;
+    }
+
+    @Override
+    public List<PostSelfResponse> getPostsByAccountId(Long accountId) {
+        return postRepository.findAllByAccountId(accountId)
+                .stream()
+                .map(post -> {
+                    var postResponse = DataUtils.copyProperties(post, PostSelfResponse.class);
+                        postResponse.setState(post.getMediaState());
+                    return postResponse;
+                })
+                .collect(Collectors.toList());
     }
 
     private Post getPost(Long id) {

@@ -8,7 +8,14 @@ public interface CommonService {
 
     Long getLoginId();
 
+    Long getCurrentAccountId();
+
     String getLoginUsername();
 
     Boolean existsUser(Long userId);
+
+
+    Boolean isNoLoginAccount(Long accountId);
+
+    Boolean isNoLogin();
 }

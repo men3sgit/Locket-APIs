@@ -1,6 +1,8 @@
 package com.rse.webservice.locket.service.impl;
 
+import com.rse.webservice.locket.exception.ApiRequestException;
 import com.rse.webservice.locket.model.User;
+import com.rse.webservice.locket.repository.AccountRepository;
 import com.rse.webservice.locket.repository.UserRepository;
 import com.rse.webservice.locket.service.CommonService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -21,8 +24,12 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CommonServiceImpl implements CommonService {
+    private static final Long NO_LOGIN_USER_ID = -1L;
+    private static final Long NO_LOGIN_ACCOUNT_ID = -2L;
+
 
     private final UserRepository userRepository;
+    private final AccountRepository accountRepository;
 
     /**
      * Retrieves the UserDetails of the currently authenticated user from the SecurityContextHolder.
@@ -50,7 +57,14 @@ public class CommonServiceImpl implements CommonService {
         return Optional.ofNullable(userDetails())
                 .filter(userDetails -> userDetails instanceof User)
                 .map(userDetails -> ((User) userDetails).getId())
-                .orElse(null);
+                .orElse(NO_LOGIN_USER_ID);
+    }
+
+    @Override
+    public Long getCurrentAccountId() {
+        return accountRepository
+                .findByUserId(getLoginId()).orElseThrow(() -> new ApiRequestException("Account not found"))
+                .getId();
     }
 
     /**
@@ -76,5 +90,15 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public Boolean existsUser(Long userId) {
         return userRepository.findById(userId).isPresent();
+    }
+
+    @Override
+    public Boolean isNoLoginAccount(Long accountId) {
+        return Objects.equals(accountId, NO_LOGIN_ACCOUNT_ID);
+    }
+
+    @Override
+    public Boolean isNoLogin() {
+        return isNoLoginAccount(getCurrentAccountId());
     }
 }
