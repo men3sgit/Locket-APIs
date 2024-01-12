@@ -1,6 +1,7 @@
 package com.rse.webservice.locket.test.java8;
 
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,11 @@ public class Main {
         map.put("Han", 1000);
         map.put("My", 420);
 
+        Main.s("Haha", System.out::println);
 
+    }
+    public static void s(String s, Consumer<String> consumer){
+        consumer.accept(s);
     }
 
 
